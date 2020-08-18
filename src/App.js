@@ -6,6 +6,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import routerUrls from "./router-urls";
 import {CssBaseline} from "@material-ui/core";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
@@ -15,6 +16,7 @@ import Header from "./components/header/header";
 import {navTabsDataForHeader} from "./router-urls";
 import MainWrapper from "./components/main-wrapper/main-wrapper";
 import Home from "./components/home/home";
+import Search from "./components/search/search";
 
 const store = configureStore();
 
@@ -40,7 +42,8 @@ const InnerApp = () => {
         <Header data={navTabsDataForHeader}/>
         <MainWrapper>
           <Switch>
-            <Route path="/" exact render={ () => <Home/> } />
+            <Route path={routerUrls.home} exact render={ () => <Home/> } />
+            <Route path={routerUrls.search} exact render={ () => <Search/> } />
           </Switch>
         </MainWrapper>
       </Router>
