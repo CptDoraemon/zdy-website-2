@@ -11,9 +11,10 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import RouterScrollRestoration from "./router-scroll-restoration";
-import ReduxTestComponentContainer from "./components/redux-test-component/redux-test-component-container";
 import Header from "./components/header/header";
 import {navTabsDataForHeader} from "./router-urls";
+import MainWrapper from "./components/main-wrapper/main-wrapper";
+import Home from "./components/home/home";
 
 const store = configureStore();
 
@@ -37,9 +38,11 @@ const InnerApp = () => {
       <Router basename={process.env.PUBLIC_URL}>
         <RouterScrollRestoration />
         <Header data={navTabsDataForHeader}/>
-        <Switch>
-          <Route path="/" exact render={ () => <ReduxTestComponentContainer/> } />
-        </Switch>
+        <MainWrapper>
+          <Switch>
+            <Route path="/" exact render={ () => <Home/> } />
+          </Switch>
+        </MainWrapper>
       </Router>
     </div>
   );

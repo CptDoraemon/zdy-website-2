@@ -9,7 +9,7 @@ import Tab from "@material-ui/core/Tab";
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    margin: theme.spacing(0, 2),
+    margin: theme.spacing(0, 2, 0, 0),
     flexGrow: 1,
   },
   activeTab: {
