@@ -1,6 +1,6 @@
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import PieChart from "../charts/pie-chart";
+import PieChart from "../../components/charts/pie-chart";
 
 const mockPieChartData = [{
   name: 'Chrome',

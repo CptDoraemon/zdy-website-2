@@ -15,8 +15,8 @@ import RouterScrollRestoration from "./router-scroll-restoration";
 import Header from "./components/header/header";
 import {navTabsDataForHeader} from "./router-urls";
 import MainWrapper from "./components/main-wrapper/main-wrapper";
-import Home from "./components/home/home";
-import Search from "./components/search/search";
+import Home from "./pages/home/home";
+import Search from "./pages/search/search";
 
 const store = configureStore();
 
