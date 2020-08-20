@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import {Link, useLocation} from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
@@ -6,11 +6,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from "@material-ui/core/Tab";
+import {Link as MuiLink} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(0, 2, 0, 0),
     flexGrow: 1,
+    fontWeight: 700,
+    fontSize: '1.5rem'
   },
   activeTab: {
     '&:visited': {
@@ -25,6 +28,18 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
     fontWeight: 700,
     fontSize: '0.8rem'
+  },
+  homeLink: {
+    '&:visited': {
+      color: theme.palette.primary.contrastText,
+    },
+    '&:link': {
+      color: theme.palette.primary.contrastText,
+      textDecoration: 'none'
+    },
+    '&:hover': {
+      color: theme.palette.secondary.light,
+    }
   }
 }));
 
@@ -34,18 +49,23 @@ const useStyles = makeStyles((theme) => ({
  * link: String
  * }>} data
  */
-const Header = ({data}) => {
+const Header = ({data, homeLink}) => {
   const classes = useStyles();
   const path = useLocation().pathname;
+  const links = useMemo(() => {
+    return data.map(obj => obj.link)
+  }, [data]);
 
   return (
     <AppBar position="static" elevation={0}>
       <Toolbar variant={'dense'}>
-        <Typography variant="h6" className={classes.title}>
-          Database
+        <Typography component={'h1'} className={classes.title} >
+          <Link to={homeLink} className={classes.homeLink}>
+            Database
+          </Link>
         </Typography>
         <Tabs
-          value={path}
+          value={links.indexOf(path) !== -1 ? path : false}
           indicatorColor="secondary"
           variant="scrollable"
           scrollButtons="auto"

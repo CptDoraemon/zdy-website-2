@@ -15,7 +15,10 @@ export const navTabsDataForHeader = Object.keys(navTabs).map(key => ({
 
 const routerUrls = {
   ...navTabs,
-  searchRowDetail: (id) => `/search/detail/${id}`
+  searchRowDetail: {
+    getRoute: (id) => `/search/detail/${id}`,
+    route: `/search/detail/:id`
+  }
 };
 
 export default routerUrls

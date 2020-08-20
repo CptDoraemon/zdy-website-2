@@ -11,7 +11,11 @@ import {Link} from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import cloneDeep from 'lodash/cloneDeep'
 import SearchTableControls from "./search-table-controls";
-import routerUrls from "../../router-urls";
+import SearchTableHead from "./search-table-head";
+import SearchTableToolbar from "./search-table-toolbar";
+import useSearchTableData from "./use-search-table-data";
+import routerUrls from "../../../router-urls";
+import {Error, Loading} from "./util-pages";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,15 +49,15 @@ const SearchTable = (
   {
     data,
     options,
+    optionsUpdater,
     totalPages,
     totalRows,
     title,
-    refreshData,
     currentPage,
     changePage,
-    dense
   }) => {
   const classes = useStyles();
+  const [dense, setDense] = useState(false);
   const [selected, setSelected] = useState({});
 
   const header = useMemo(() => {
@@ -82,7 +86,6 @@ const SearchTable = (
 
   const handleChangePage = (e, value) => {
     changePage(value);
-    refreshData()
   };
 
   const isSelected = (id) => !(selected[id] === undefined || selected[id] === false);
@@ -93,24 +96,23 @@ const SearchTable = (
     }
   }
 
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {/*<DataTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows}/>*/}
-        <SearchTableControls optionsGroup={options}/>
+        <SearchTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows} updater={optionsUpdater}/>
+        <SearchTableControls optionsGroup={options} dense={dense} toggleDense={() => setDense(dense => !dense)}/>
         <TableContainer className={classes.table}>
           <Table
             stickyHeader
             size={dense ? 'small' : 'medium'}
             aria-label="data table"
           >
-            {/*<DataTableHead*/}
-            {/*  header={header}*/}
-            {/*  numSelected={selectedIDs.length}*/}
-            {/*  onSelectAllClick={handleSelectAllClick}*/}
-            {/*  rowCount={data.length}*/}
-            {/*/>*/}
+            <SearchTableHead
+              header={header}
+              numSelected={selectedIDs.length}
+              onSelectAllClick={handleSelectAllClick}
+              rowCount={data.length}
+            />
             <TableBody>
               {
                 data.map((row, i) => {
@@ -145,7 +147,7 @@ const SearchTable = (
                         align={'right'}
                         padding={'default'}
                       >
-                        <Link to={routerUrls.searchRowDetail(id)} className={classes.moreInfo}>More Info</Link>
+                        <Link to={routerUrls.searchRowDetail.getRoute(id)} className={classes.moreInfo}>More Info</Link>
                       </TableCell>
                     </TableRow>
                   )
@@ -161,4 +163,17 @@ const SearchTable = (
   );
 };
 
-export default SearchTable
+const WithDataSearchTable = () => {
+    const {
+      props,
+      states
+    } = useSearchTableData();
+
+    return states.error ?
+      <Error/> :
+      states.loading ?
+        <Loading/> :
+        <SearchTable {...props} />
+};
+
+export default WithDataSearchTable

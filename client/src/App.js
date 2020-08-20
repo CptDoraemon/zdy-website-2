@@ -17,6 +17,7 @@ import {navTabsDataForHeader} from "./router-urls";
 import MainWrapper from "./components/main-wrapper/main-wrapper";
 import Home from "./pages/home/home";
 import Search from "./pages/search/search";
+import SearchRowDetail from "./pages/search/search-row-detail";
 
 const store = configureStore();
 
@@ -39,11 +40,12 @@ const InnerApp = () => {
     <div className={classes.root}>
       <Router basename={process.env.PUBLIC_URL}>
         <RouterScrollRestoration />
-        <Header data={navTabsDataForHeader}/>
+        <Header data={navTabsDataForHeader} homeLink={routerUrls.home}/>
         <MainWrapper>
           <Switch>
             <Route path={routerUrls.home} exact render={ () => <Home/> } />
             <Route path={routerUrls.search} exact render={ () => <Search/> } />
+            <Route path={routerUrls.searchRowDetail.route} exact render={ (props) => <SearchRowDetail id={props.match.params.id} goBack={props.history.goBack}/> } />
           </Switch>
         </MainWrapper>
       </Router>

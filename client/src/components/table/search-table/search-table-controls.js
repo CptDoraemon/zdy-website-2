@@ -25,11 +25,15 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     minWidth: 150,
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    textTransform: 'capitalize'
   },
   selectInput: {
     padding: '8px 12px',
     fontSize: theme.typography.body2.fontSize,
+    textTransform: 'capitalize'
+  },
+  menuItem: {
     textTransform: 'capitalize'
   }
 }));
@@ -117,7 +121,7 @@ const SearchTableControlOneOption = ({option, updater}) => {
       >
         {
           option.items.map(item => (
-            <MenuItem key={item.internalName} value={item.internalName} dense>{item.displayName}</MenuItem>
+            <MenuItem key={item.internalName} value={item.internalName} dense className={classes.menuItem}>{item.displayName}</MenuItem>
           ))
         }
       </Select>
