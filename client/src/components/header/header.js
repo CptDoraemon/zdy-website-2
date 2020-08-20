@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from "@material-ui/core/Tab";
-import {Link as MuiLink} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   title: {

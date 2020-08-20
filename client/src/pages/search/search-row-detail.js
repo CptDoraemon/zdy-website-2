@@ -3,6 +3,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Button from "@material-ui/core/Button";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import BoxScatterPlotChart from "../../components/charts/box-scatter-plot";
+import {genderGroup} from "./search-row-detail-mock-data";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,13 +50,7 @@ const SearchRowDetail = ({id, goBack}) => {
         Back
       </Button>
       <div className={classes.chartsWrapper}>
-      {
-        ['1', '2', '3', '4'].map((id) => (
-          <div key={id} className={classes.chartContainer}>
-            <BoxScatterPlotChart id={`search-row-detail-box-scatter-plot-${id}`}/>
-          </div>
-        ))
-      }
+        <BoxScatterPlotChart id={`search-row-detail-box-scatter-plot-1`} data={genderGroup}/>
       </div>
     </div>
   )

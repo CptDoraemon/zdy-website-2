@@ -1,22 +1,20 @@
 import React, {useEffect} from "react";
 import HighchartsWrapper from "./highcharts-wrapper";
 
+// const dataStructure = {
+//   categories: ['1', '2', '3'],
+//   data: [
+//     [],
+//     [],
+//     []
+//   ]
+// };
+
 const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
   useEffect(() => {
-    function getExperimentData() {
-      var data = [],
-        off = 0.3 + 0.2 * Math.random(),
-        i;
-      for (i = 0; i < 200; i++) {
-        data.push(
-          Math.round(1000 * (off + (Math.random() - 0.5) * (Math.random() - 0.5)))
-        );
-      }
-      return data;
-    }
 
     function getBoxPlotData(values) {
-      var sorted = values.sort(function (a, b) {
+      const sorted = values.sort(function (a, b) {
         return a - b;
       });
 
@@ -29,23 +27,14 @@ const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
       };
     }
 
-    var experiments = [
-      getExperimentData(),
-      getExperimentData(),
-      getExperimentData(),
-      getExperimentData(),
-      getExperimentData()
-    ];
-
-    var scatterData = experiments
+    const scatterData = data.data
       .reduce(function (acc, data, x) {
         return acc.concat(data.map(function (value) {
           return [x, value];
         }));
       }, []);
 
-    var boxplotData = experiments
-      .map(getBoxPlotData);
+    const boxplotData = data.data.map(getBoxPlotData);
 
     Highcharts.chart(elementId, {
 
@@ -62,7 +51,7 @@ const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
       },
 
       xAxis: {
-        categories: ['1', '2', '3', '4', '5'],
+        categories: data.categories,
         title: {
           text: 'Experiment No.'
         }
