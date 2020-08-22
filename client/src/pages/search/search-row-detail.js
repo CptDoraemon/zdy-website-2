@@ -3,7 +3,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Button from "@material-ui/core/Button";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import BoxScatterPlotChart from "../../components/charts/box-scatter-plot";
-import {genderGroup} from "./search-row-detail-mock-data";
+import {byGender, byCancerType} from "./search-row-detail-mock-data";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     height: 300,
-    width: `calc(50% - 2 * ${theme.spacing(2)}px)`,
+    width: `calc(100% - 2 * ${theme.spacing(2)}px)`,
     margin: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       width: `calc(100% - 2 * ${theme.spacing(1)}px)`,
@@ -33,6 +33,20 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
+
+const byGenderChartOptions = {
+  id: 'search-row-detail-box-scatter-plot-1',
+  title: 'By Gender',
+  xTitle: 'Gender Group',
+  yTitle: 'Expression'
+};
+
+const byCancerTypeChartOptions = {
+  id: 'search-row-detail-box-scatter-plot-2',
+  title: 'By Cancer Type',
+  xTitle: 'Cancer Type',
+  yTitle: 'Expression'
+};
 
 const SearchRowDetail = ({id, goBack}) => {
   const classes = useStyles();
@@ -50,7 +64,12 @@ const SearchRowDetail = ({id, goBack}) => {
         Back
       </Button>
       <div className={classes.chartsWrapper}>
-        <BoxScatterPlotChart id={`search-row-detail-box-scatter-plot-1`} data={genderGroup}/>
+        <div className={classes.chartContainer}>
+          <BoxScatterPlotChart options={byGenderChartOptions} data={byGender}/>
+        </div>
+        <div className={classes.chartContainer}>
+          <BoxScatterPlotChart options={byCancerTypeChartOptions} data={byCancerType}/>
+        </div>
       </div>
     </div>
   )

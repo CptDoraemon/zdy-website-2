@@ -1,3 +1,12 @@
+/**
+ * @typedef {{
+ *   header: string[],
+ *   data: *[][]
+ * }} RawData
+ */
+/**
+ * @type {RawData}
+ */
 const rawData = {
   header: ["Gene_ID","cancer type","sex","age","ENSG00000000003"],
   data: [
@@ -286,37 +295,48 @@ const rawData = {
   ]
 };
 
-export const genderGroup = (() => {
-  const sexIndex = rawData.header.indexOf('sex');
-  const valueIndex = rawData.header.indexOf('ENSG00000000003');
+/**
+ * @param {RawData} data
+ * @param {string} categoryName
+ * @param {string} valueName
+ * @returns {{returnData: string[], categories: *[][]}}
+ */
+const processData = (data, categoryName, valueName) => {
+  const headerRow = data.header;
+  const categoryColumnIndex = headerRow.indexOf(categoryName);
+  const valueColumnIndex = headerRow.indexOf(valueName);
 
-  const categories = rawData.data.reduce((acc, current) => {
-    const currentSex = current[sexIndex];
-    if (acc.indexOf(currentSex) === -1) {
-      acc.push(currentSex);
+  // get a non-duplicated category array
+  const categories = data.data.reduce((acc, current) => {
+    const currentCategory = current[categoryColumnIndex];
+    if (acc.indexOf(currentCategory) === -1) {
+      acc.push(currentCategory);
     }
 
     return acc.slice()
   }, []);
 
-  // const data = new Array(categories.length).fill([]);
-  const data = [];
+  // sort target value into 2-dimension array
+  // the first index of returnData === index of the categories array
+  const returnData = [];
   for (let i=0; i<categories.length; i++) {
-    data.push([])
+    returnData.push([])
   }
   rawData.data.forEach(row => {
-    const category = row[sexIndex];
+    const category = row[categoryColumnIndex];
     const categoryIndex = categories.indexOf(category);
-    const value = row[valueIndex];
-    data[categoryIndex].push(value)
+    const value = row[valueColumnIndex];
+    returnData[categoryIndex].push(value)
   });
 
   return {
     categories,
-    data
+    data: returnData
   }
-})();
+};
 
-const cancerType = (() => {
+const valueName = 'ENSG00000000003';
+const byGender = processData(rawData, 'sex', valueName);
+const byCancerType = processData(rawData, 'cancer type', valueName);
 
-})();
+export {byGender, byCancerType}

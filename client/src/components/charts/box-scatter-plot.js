@@ -1,16 +1,25 @@
 import React, {useEffect} from "react";
 import HighchartsWrapper from "./highcharts-wrapper";
 
-// const dataStructure = {
-//   categories: ['1', '2', '3'],
-//   data: [
-//     [],
-//     [],
-//     []
-//   ]
-// };
-
-const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
+/**
+ * @typedef {{
+    id: string,
+    title: string,
+    xTitle: string,
+    yTitle: string
+ * }} Options
+ */
+/**
+ * @typedef {{
+ *   categories: string[],
+ *   data: *[][]
+ * }} Data
+ */
+/**
+ * @param {Options} options
+ * @param {Data} data
+ */
+const useBoxScatterPlotChart = (Highcharts, options, data) => {
   useEffect(() => {
 
     function getBoxPlotData(values) {
@@ -36,10 +45,10 @@ const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
 
     const boxplotData = data.data.map(getBoxPlotData);
 
-    Highcharts.chart(elementId, {
+    Highcharts.chart(options.id, {
 
       title: {
-        text: 'Highcharts Box Plot and Jittered Scatter Plot'
+        text: options.title
       },
 
       credits: {
@@ -53,13 +62,27 @@ const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
       xAxis: {
         categories: data.categories,
         title: {
-          text: 'Experiment No.'
+          text: options.xTitle
+        },
+        labels: {
+          autoRotation: false,
+          useHTML: true
         }
       },
 
       yAxis: {
         title: {
-          text: 'Observations'
+          text: options.yTitle,
+        }
+      },
+
+      plotOptions: {
+        boxplot: {
+          // lineWidth: 3,
+          // medianWidth: 3,
+          // stemWidth: 3,
+          // whiskerLength: '75%',
+          // whiskerWidth: 3,
         }
       },
 
@@ -68,7 +91,7 @@ const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
         name: 'Summary',
         data: boxplotData,
         tooltip: {
-          headerFormat: '<em>Experiment No {point.key}</em><br/>'
+          headerFormat: ''
         }
       }, {
         name: 'Observation',
@@ -82,27 +105,38 @@ const useBoxScatterPlotChart = (Highcharts, elementId, data) => {
         },
         color: 'rgba(100, 100, 100, 0.5)',
         tooltip: {
-          pointFormat: 'Value: {point.y}'
+          headerFormat: '',
+          pointFormatter: function() {
+            return `${options.yTitle}: ${this.y}`
+          },
         }
       }]
     });
   }, [])
 };
 
-const HighchartsBoxScatterPlotChart = ({Highcharts, id, data}) => {
-  useBoxScatterPlotChart(Highcharts, id, data);
+/**
+ * @param {Options} options
+ * @param {Data} data
+ */
+const HighchartsBoxScatterPlotChart = ({Highcharts, options, data}) => {
+  useBoxScatterPlotChart(Highcharts, options, data);
 
   return (
-    <div id={id} style={{width: '100%', height: '100%'}}>
+    <div id={options.id} style={{width: '100%', height: '100%'}}>
 
     </div>
   )
 };
 
-const BoxScatterPlotChart = ({id, data}) => {
+/**
+ * @param {Options} options
+ * @param {Data} data
+ */
+const BoxScatterPlotChart = ({options, data}) => {
   return (
     <HighchartsWrapper>
-      <HighchartsBoxScatterPlotChart id={id} data={data}/>
+      <HighchartsBoxScatterPlotChart options={options} data={data}/>
     </HighchartsWrapper>
   )
 };
