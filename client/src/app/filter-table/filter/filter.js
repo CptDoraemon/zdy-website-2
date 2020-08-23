@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Fade from "@material-ui/core/Fade";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import {primaryButtonStyles, successButtonStyles, warningButtonStyles} from "../../styles";
+import {primaryButtonStyles, successButtonStyles, warningButtonStyles} from "../../../styles";
 import FiltersGroup from "./filters-group";
 
 const useStyles = makeStyles(theme => ({

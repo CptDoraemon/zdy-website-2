@@ -63,23 +63,23 @@ const useStyles = makeStyles(theme => ({
  *
  * @param dense
  * @param toggleDense
- * @param {Option[]} optionsGroup
+ * @param {Option[]} sort
  * @param {Updater} updater
  */
 const SearchTableControls = (
   {
     dense,
     toggleDense,
-    optionsGroup,
-    updater
+    sort,
+    sortUpdater
   }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       {
-        optionsGroup.map(option => (
-          <SearchTableControlOneOption key={option.title.internalName} option={option} updater={updater}/>
+        sort.map(option => (
+          <SearchTableControlOneOption key={option.title.internalName} option={option} sortUpdater={sortUpdater}/>
         ))
       }
       <FormControlLabel
@@ -96,13 +96,13 @@ const SearchTableControls = (
 
 /**
  * @param {Option} option
- * @param {Updater} updater
+ * @param {Updater} sortUpdaters
  */
-const SearchTableControlOneOption = ({option, updater}) => {
+const SearchTableControlOneOption = ({option, sortUpdater}) => {
   const classes = useStyles();
 
   const changeHandler = (e) => {
-    updater(option.title.internalName, e.target.value)
+    sortUpdater(option.title.internalName, e.target.value)
   };
 
   const id = `search-table-control-${option.title.internalName}`;

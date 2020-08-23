@@ -13,7 +13,6 @@ import cloneDeep from 'lodash/cloneDeep'
 import SearchTableControls from "./search-table-controls";
 import SearchTableHead from "./search-table-head";
 import SearchTableToolbar from "./search-table-toolbar";
-import useSearchTableData from "./use-search-table-data";
 import routerUrls from "../../../router-urls";
 import {Error, Loading} from "./util-pages";
 
@@ -45,20 +44,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SearchTable = (
+const InnerSearchTable = (
   {
-    data,
-    options,
-    optionsUpdater,
-    totalPages,
-    totalRows,
+    table,
+    sort,
     title,
-    currentPage,
+    sortUpdater,
+    toggleDense,
     changePage,
   }) => {
   const classes = useStyles();
-  const [dense, setDense] = useState(false);
   const [selected, setSelected] = useState({});
+
+  const data = table.data;
+  const dense = table.dense;
+  const totalPages = table.totalPages;
+  const currentPage = table.currentPage;
+  const totalRows = table.totalRows;
 
   const header = useMemo(() => {
     return Object.keys(data[0]);
@@ -99,8 +101,8 @@ const SearchTable = (
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        <SearchTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows} updater={optionsUpdater}/>
-        <SearchTableControls optionsGroup={options} dense={dense} toggleDense={() => setDense(dense => !dense)}/>
+        <SearchTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows}/>
+        <SearchTableControls sort={sort} sortUpdater={sortUpdater} dense={dense} toggleDense={toggleDense}/>
         <TableContainer className={classes.table}>
           <Table
             stickyHeader
@@ -163,17 +165,22 @@ const SearchTable = (
   );
 };
 
-const WithDataSearchTable = () => {
-    const {
-      props,
-      states
-    } = useSearchTableData();
-
-    return states.error ?
-      <Error/> :
-      states.loading ?
-        <Loading/> :
-        <SearchTable {...props} />
+const SearchTable = ({state, title, sortUpdater, toggleDense}) => {
+  if (state.table.error) {
+    return <Error/>
+  } else if (state.table.loading) {
+    return <Loading/>
+  } else {
+    const props = {
+      table: state.table,
+      sort: state.sort,
+      title,
+      sortUpdater,
+      toggleDense,
+      changePage: () => false,
+    };
+    return <InnerSearchTable {...props}/>
+  }
 };
 
-export default WithDataSearchTable
+export default SearchTable
