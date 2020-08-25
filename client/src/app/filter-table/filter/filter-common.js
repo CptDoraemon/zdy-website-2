@@ -8,11 +8,12 @@ import filterStyles from "./filter-styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
-
+    margin: theme.spacing(1),
   },
   legend: {
     ...filterStyles(theme).text,
-    marginBottom: '4px'
+    marginBottom: '4px',
+    fontWeight: 700
   },
   checkboxLabel: {
     ...filterStyles(theme).text,

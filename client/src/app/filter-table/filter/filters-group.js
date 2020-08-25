@@ -27,14 +27,19 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2)
   },
   filtersGroup: {
-    marginLeft: theme.spacing(2)
+    marginLeft: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap'
   },
   buttonsGroup: {
     marginLeft: theme.spacing(2)
   },
   applyButton: {
     ...successButtonStyles(theme).root,
-    margin: theme.spacing(1),
+    margin: theme.spacing(0),
   },
   resetButton: {
     ...warningButtonStyles(theme).root,
@@ -51,10 +56,15 @@ const useStyles = makeStyles(theme => ({
  */
 
 /**
+ * @callback updatePendingFilter
+ */
+
+/**
  * @param {boolean} isResettable
  * @param {boolean} isPendingApplicable
  * @param {boolean} disabled
  * @param {Object[]} filters
+ * @param {updatePendingFilter} updatePendingFilter
  * @param {applyFilter} applyFilter
  * @param {resetFilter} resetFilter
  */
@@ -63,6 +73,7 @@ const FiltersGroup = ({
   isPendingApplicable,
   filters,
   disabled,
+  updatePendingFilter,
   applyFilter,
   resetFilter
                 }) => {
@@ -94,7 +105,7 @@ const FiltersGroup = ({
             <div className={classes.filtersGroup}>
               {
                 filters.map((obj, i) => (
-                  <Filter filter={obj} key={i} />
+                  <Filter filter={obj} key={i} updatePendingFilter={updatePendingFilter}/>
                   ))
               }
             </div>

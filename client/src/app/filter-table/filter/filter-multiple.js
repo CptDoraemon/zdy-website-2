@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
   },
   checkbox: {
     padding: '2px 9px'
+  },
+  formGroup: {
+    maxHeight: 200
   }
 }));
 
@@ -33,13 +36,24 @@ const useStyles = makeStyles(theme => ({
  *  choices: [],
  *  validationMessage: string
  * }} filter
+ *  @param {import('./filter').updatePendingFilter} updatePendingFilter
  */
-const FilterMultiple = ({filter}) => {
+const FilterMultiple = ({filter, updatePendingFilter}) => {
   const classes = useStyles();
 
   const changeHandler = (e) => {
-    console.log('called')
-    // alter(filterName, e.target.name, e.target.checked)
+    const name = e.target.name;
+
+    if (e.target.checked) {
+      // check
+      const prevPending = filter.pending.slice();
+      prevPending.push(name);
+      updatePendingFilter(filter.title, prevPending)
+    } else {
+      // uncheck
+      const newPending = filter.pending.filter(existingName => existingName !== name);
+      updatePendingFilter(filter.title, newPending)
+    }
   };
 
   const isValid = filter.validationMessage === '';
@@ -55,7 +69,7 @@ const FilterMultiple = ({filter}) => {
 
   return (
     <FilterCommon title={filter.title} validationMessage={filter.validationMessage}>
-      <FormGroup>
+      <FormGroup className={classes.formGroup}>
         {
           filter.choices.map((choiceName, i) => (
             <FormControlLabel

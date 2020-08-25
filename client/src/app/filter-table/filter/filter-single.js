@@ -9,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 150,
-    margin: theme.spacing(1),
+    margin: theme.spacing(1, 0),
     textTransform: 'capitalize'
   },
   selectInput: {
@@ -32,13 +32,13 @@ const useStyles = makeStyles(theme => ({
  *  choices: [],
  *  validationMessage: string
  * }} filter
+ * @param {import('./filter').updatePendingFilter} updatePendingFilter
  */
-const FilterSingle = ({filter}) => {
+const FilterSingle = ({filter, updatePendingFilter}) => {
   const classes = useStyles();
 
   const changeHandler = (e) => {
-    console.log('called')
-    // alter(filterName, e.target.name, e.target.checked)
+    updatePendingFilter(filter.title, [e.target.value])
   };
 
   const isValid = filter.validationMessage === '';

@@ -10,16 +10,23 @@ const types = {
 };
 
 /**
- * @param {Object} filter
+ * @callback updatePendingFilter
+ * @param {string} title
+ * @param {*[]} pending
  */
-const Filter = ({filter}) => {
+/**
+ * @param {Object} filter
+ * @param {updatePendingFilter} updatePendingFilter
+ */
+const Filter = ({filter, updatePendingFilter}) => {
+  const props = {filter, updatePendingFilter};
   switch (filter.type) {
     case types.range:
-      return <FilterRange filter={filter}/>;
+      return <FilterRange {...props} />;
     case types.single:
-      return <FilterSingle filter={filter}/>;
+      return <FilterSingle {...props} />;
     case types.multiple:
-      return <FilterMultiple filter={filter}/>;
+      return <FilterMultiple {...props} />;
     default:
       return 'unknown filter'
   }

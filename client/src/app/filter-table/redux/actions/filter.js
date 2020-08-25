@@ -14,6 +14,6 @@ const updatePendingFilter = (title, pending) => {
   }
 };
 
-export const testActionsGenerators = {
+export const filterActionsGenerators = {
   updatePendingFilter
 };

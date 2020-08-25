@@ -1,11 +1,29 @@
 import { cloneDeep } from 'lodash';
 
-const types = {
+export const types = {
   range: 'range',
   single: 'single',
   multiple: 'multiple'
 };
 
+/**
+ * @typedef {{
+ *   title: string,
+ *   type: string,
+ *   choices: *[]
+ *   original: *[],
+ *   active: *[],
+ *   pending: *[],
+ *   validationMessage: string,
+ * }} FilterState
+ */
+/**
+ * @param {string} title
+ * @param {string} type
+ * @param {*[]} choices
+ * @param {*[]} original
+ * @returns {FilterState}
+ */
 const getBaseFilterObj = (title, type, choices, original) => {
   const copy = (value) => {
     return Array.isArray(value) ? value : value.slice()
@@ -42,16 +60,25 @@ const getMultipleFilter = (title, choices, original) => {
   return getBaseFilterObj(title, types.multiple, choices, original)
 };
 
-
+const mockChoice = new Array(15).fill('1').map((_, i) => `choice${i+1}`);
 const defaultFilters = [
   getRangeFilter('range filter', 100, 200),
-  getSingleFilter('single filter', ['choice1', 'choice2', 'choice3'], ['choice2']),
-  getMultipleFilter('multiple filter', ['choice1', 'choice2', 'choice3', 'choice4'], ['choice2', 'choice4'])
+  getSingleFilter('single filter', mockChoice, ['choice2']),
+  getMultipleFilter('multiple filter', mockChoice, ['choice2'])
 ];
 
+/**
+ * @typedef {{
+ *  filter: FilterState[],
+ *  isPendingApplicable: boolean,
+ *  isResettable: boolean
+ * }} DefaultFilterState
+ */
+/**
+ * @type {DefaultFilterState}
+ */
 const defaultFilterState = {
-  active: cloneDeep(defaultFilters),
-  pending: cloneDeep(defaultFilters),
+  filter: cloneDeep(defaultFilters),
   isPendingApplicable: false,
   isResettable: false
 };

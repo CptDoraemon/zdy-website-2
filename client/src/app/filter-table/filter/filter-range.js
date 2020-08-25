@@ -20,26 +20,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const MIN_NAME = 'min';
+const MAX_NAME = 'max';
+
 /**
  * @param {{
  *  title: string,
  *  type: string,
- *  original: [],
- *  active: [],
  *  pending: [],
  *  validationMessage: string
  * }} filter
+ * @param {import('./filter').updatePendingFilter} updatePendingFilter
  */
-const FilterRange = ({filter}) => {
+const FilterRange = ({filter, updatePendingFilter}) => {
   const classes = useStyles();
+  console.log(filter.pending);
 
   const changeHandler = (e) => {
-    // alter(filterName, e.target.name, e.target.value)
+    let pending;
+    const newString = e.target.value;
+
+    if (e.target.name === MIN_NAME) {
+      pending = [newString, filter.pending[1]]
+    } else {
+      pending = [filter.pending[0], newString]
+    }
+    updatePendingFilter(filter.title, pending)
   };
 
   const isValid = filter.validationMessage === '';
-  const min = filter.pending[0];
-  const max = filter.pending[1];
 
   const textFieldProps = {
     type: 'number',
@@ -56,8 +65,8 @@ const FilterRange = ({filter}) => {
   return (
     <FilterCommon title={filter.title} validationMessage={filter.validationMessage}>
       <div className={classes.textFieldGroup}>
-        <TextField label="Min" name="min" value={min} {...textFieldProps}/>
-        <TextField label="Max" name="max"value={max} {...textFieldProps}/>
+        <TextField label="Min" name={MIN_NAME} value={filter.pending[0]} {...textFieldProps}/>
+        <TextField label="Max" name={MAX_NAME} value={filter.pending[1]} {...textFieldProps}/>
       </div>
     </FilterCommon>
   )
