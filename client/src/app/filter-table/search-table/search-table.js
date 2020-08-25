@@ -165,7 +165,7 @@ const InnerSearchTable = (
   );
 };
 
-const SearchTable = ({state, title, sortUpdater, toggleDense}) => {
+const SearchTable = ({state, title, sortUpdater, toggleDense, changePage}) => {
   if (state.table.error) {
     return <Error/>
   } else if (state.table.loading) {
@@ -177,7 +177,7 @@ const SearchTable = ({state, title, sortUpdater, toggleDense}) => {
       title,
       sortUpdater,
       toggleDense,
-      changePage: () => false,
+      changePage,
     };
     return <InnerSearchTable {...props}/>
   }

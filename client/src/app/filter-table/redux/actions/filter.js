@@ -1,19 +1,19 @@
 export const filterActions = {
-  'FILTER_UPDATE_FILTER': 'FILTER_UPDATE_FILTER'
+  'FILTER_UPDATE_PENDING_FILTER': 'FILTER_UPDATE_PENDING_FILTER'
 };
 
 /**
- * @param {string} internalName
- * @param {string} selected
+ * @param {string} title
+ * @param {[]} pending
  */
-const updateFilter = (internalName, selected) => {
+const updatePendingFilter = (title, pending) => {
   return {
-    type: filterActions['FILTER_UPDATE_FILTER'],
-    internalName,
-    selected
+    type: filterActions['FILTER_UPDATE_PENDING_FILTER'],
+    title,
+    pending
   }
 };
 
 export const testActionsGenerators = {
-  updateFilter
+  updatePendingFilter
 };

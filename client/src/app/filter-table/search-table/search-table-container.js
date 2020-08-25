@@ -10,6 +10,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleDense: () => {
       dispatch(tableActionsGenerators.toggleDense())
+    },
+    changePage: (page) => {
+      dispatch(tableActionsGenerators.changePage(page))
     }
   }
 }

@@ -9,6 +9,12 @@ function table(state = filterTableDefaultState.table, actions) {
         state,
         {dense: !state.dense}
       );
+    case tableActions.TABLE_CHANGE_PAGE:
+      return Object.assign(
+        {},
+        state,
+        {currentPage: actions.page}
+      );
     default:
       return state
   }
