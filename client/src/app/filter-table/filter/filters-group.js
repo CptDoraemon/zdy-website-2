@@ -32,7 +32,10 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    }
   },
   buttonsGroup: {
     marginLeft: theme.spacing(2)
@@ -67,6 +70,8 @@ const useStyles = makeStyles(theme => ({
  * @param {updatePendingFilter} updatePendingFilter
  * @param {applyFilter} applyFilter
  * @param {resetFilter} resetFilter
+ * @param {boolean} dropdown
+ * @param {Function} toggleDropdown
  */
 const FiltersGroup = ({
   isResettable,
@@ -75,11 +80,11 @@ const FiltersGroup = ({
   disabled,
   updatePendingFilter,
   applyFilter,
-  resetFilter
+  resetFilter,
+  dropdown,
+  toggleDropdown,
                 }) => {
   const classes = useStyles();
-  const [dropdown, setDropdown] = useState(false);
-
   const canApplyNewFilter = !disabled && isPendingApplicable;
 
   return (
@@ -91,7 +96,7 @@ const FiltersGroup = ({
         className={`${classes.filterButton} ${isResettable ? classes.filterButtonActive : classes.filterButtonInactive}`}
         endIcon={dropdown ? <KeyboardArrowDownIcon/> : <ChevronRightIcon/>}
         aria-expanded={dropdown}
-        onClick={() => setDropdown(dropdown => !dropdown)}
+        onClick={toggleDropdown}
       >
         {
           isResettable ? 'Filters Applied' : 'Filters'

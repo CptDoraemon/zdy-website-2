@@ -4,7 +4,8 @@ import {filterActionsGenerators} from "../redux/actions/filter";
 
 function mapDispatchToProps(dispatch) {
   return {
-    updatePendingFilter: (title, pending) => dispatch(filterActionsGenerators.updatePendingFilter(title, pending))
+    updatePendingFilter: (title, pending) => dispatch(filterActionsGenerators.updatePendingFilter(title, pending)),
+    toggleDropdown: () => dispatch(filterActionsGenerators.toggleDropdown())
   }
 }
 
@@ -13,7 +14,8 @@ function mapStateToProps(state) {
     filters: state.table.filter.filter,
     isPendingApplicable: state.table.filter.isPendingApplicable,
     isResettable: state.table.filter.isResettable,
-    disabled: state.table.table.disabled
+    disabled: state.table.table.disabled,
+    dropdown: state.table.filter.dropdown
   }
 }
 

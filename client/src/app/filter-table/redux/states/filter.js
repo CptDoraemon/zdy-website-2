@@ -71,7 +71,8 @@ const defaultFilters = [
  * @typedef {{
  *  filter: FilterState[],
  *  isPendingApplicable: boolean,
- *  isResettable: boolean
+ *  isResettable: boolean,
+ *  dropdown: boolean
  * }} DefaultFilterState
  */
 /**
@@ -80,7 +81,8 @@ const defaultFilters = [
 const defaultFilterState = {
   filter: cloneDeep(defaultFilters),
   isPendingApplicable: false,
-  isResettable: false
+  isResettable: false,
+  dropdown: false
 };
 
 export default defaultFilterState

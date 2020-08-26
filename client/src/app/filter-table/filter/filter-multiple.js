@@ -22,7 +22,12 @@ const useStyles = makeStyles(theme => ({
     padding: '2px 9px'
   },
   formGroup: {
-    maxHeight: 200
+    maxHeight: 200,
+    width: 'auto',
+    position: 'relative',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: 'none',
+    }
   }
 }));
 

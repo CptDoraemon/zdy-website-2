@@ -103,6 +103,14 @@ function filter(state = filterTableDefaultState.filter, actions) {
           }
         )
       })();
+    case filterActions.FILTER_TOGGLE_DROPDOWN:
+      return Object.assign(
+        {},
+        state,
+        {
+          dropdown: !state.dropdown,
+        }
+      );
     default:
       return state
   }

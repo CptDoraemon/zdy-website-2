@@ -1,5 +1,6 @@
 export const filterActions = {
-  'FILTER_UPDATE_PENDING_FILTER': 'FILTER_UPDATE_PENDING_FILTER'
+  'FILTER_UPDATE_PENDING_FILTER': 'FILTER_UPDATE_PENDING_FILTER',
+  'FILTER_TOGGLE_DROPDOWN': 'FILTER_TOGGLE_DROPDOWN'
 };
 
 /**
@@ -14,6 +15,13 @@ const updatePendingFilter = (title, pending) => {
   }
 };
 
+const toggleDropdown = () => {
+  return {
+    type: filterActions['FILTER_TOGGLE_DROPDOWN']
+  }
+};
+
 export const filterActionsGenerators = {
-  updatePendingFilter
+  updatePendingFilter,
+  toggleDropdown
 };
