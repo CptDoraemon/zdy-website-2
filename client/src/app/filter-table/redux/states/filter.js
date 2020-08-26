@@ -63,8 +63,9 @@ const getMultipleFilter = (title, choices, original) => {
 const mockChoice = new Array(15).fill('1').map((_, i) => `choice${i+1}`);
 const defaultFilters = [
   getRangeFilter('range filter', 100, 200),
-  getSingleFilter('single filter', mockChoice, ['choice2']),
-  getMultipleFilter('multiple filter', mockChoice, ['choice2'])
+  getSingleFilter('single filter', mockChoice, ['choice1']),
+  getMultipleFilter('multiple filter 1', mockChoice, ['choice5']),
+  getMultipleFilter('multiple filter 2', mockChoice, ['choice1', 'choice2'])
 ];
 
 /**

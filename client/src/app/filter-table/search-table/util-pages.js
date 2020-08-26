@@ -12,9 +12,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Loading = () => {
+const Loading = ({height}) => {
   return (
-    <Wrapper>
+    <Wrapper height={height}>
       <CircularProgress disableShrink />
     </Wrapper>
   )
@@ -28,11 +28,11 @@ const Error = () => {
   )
 };
 
-const Wrapper = ({children}) => {
+const Wrapper = ({children, height}) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={height !== undefined ? {height} : null}>
       {children}
     </div>
   )

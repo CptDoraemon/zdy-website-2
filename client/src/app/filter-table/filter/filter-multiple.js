@@ -19,11 +19,9 @@ const useStyles = makeStyles(theme => ({
     }
   },
   checkbox: {
-    padding: '2px 9px'
+    padding: '2px 9px',
   },
   formGroup: {
-    maxHeight: 200,
-    width: 'auto',
     position: 'relative',
     [theme.breakpoints.down('sm')]: {
       maxHeight: 'none',

@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const InnerSearchTable = (
+const InnerSearchTable = React.forwardRef((
   {
     table,
     sort,
@@ -52,7 +52,7 @@ const InnerSearchTable = (
     sortUpdater,
     toggleDense,
     changePage,
-  }) => {
+  }, ref) => {
   const classes = useStyles();
   const [selected, setSelected] = useState({});
 
@@ -99,7 +99,7 @@ const InnerSearchTable = (
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} ref={ref}>
       <Paper className={classes.paper} elevation={0}>
         <SearchTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows}/>
         <SearchTableControls sort={sort} sortUpdater={sortUpdater} dense={dense} toggleDense={toggleDense}/>
@@ -163,13 +163,24 @@ const InnerSearchTable = (
       </Paper>
     </div>
   );
-};
+});
 
 const SearchTable = ({state, title, sortUpdater, toggleDense, changePage}) => {
+  const ref = useRef(null);
+  const loading = state.table.loading;
+
+  const [tableHeight, setTableHeight] = useState(400);
+  useEffect(() => {
+    if (loading) return;
+    if (ref.current) {
+      setTableHeight(ref.current.scrollHeight);
+    }
+  }, [loading]);
+
   if (state.table.error) {
     return <Error/>
   } else if (state.table.loading) {
-    return <Loading/>
+    return <Loading height={tableHeight}/>
   } else {
     const props = {
       table: state.table,
@@ -179,7 +190,7 @@ const SearchTable = ({state, title, sortUpdater, toggleDense, changePage}) => {
       toggleDense,
       changePage,
     };
-    return <InnerSearchTable {...props}/>
+    return <InnerSearchTable {...props} ref={ref}/>
   }
 };
 
