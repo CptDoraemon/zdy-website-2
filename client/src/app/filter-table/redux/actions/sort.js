@@ -1,3 +1,6 @@
+import {cloneDeep} from "lodash";
+import {tableActionsGenerators} from "./table/table";
+
 export const sortActions = {
   'SORT_UPDATE_SORT': 'SORT_UPDATE_SORT'
 };
@@ -7,11 +10,21 @@ export const sortActions = {
  * @param {string} selected
  */
 const updateSort = (internalName, selected) => {
-  return {
-    type: sortActions['SORT_UPDATE_SORT'],
-    internalName,
-    selected
-  }
+  return (dispatch, getState) => {
+    const newSortState = cloneDeep(getState().sort);
+    for (let i=0; i<newSortState.length; i++) {
+      if (newSortState[i].title.internalName === internalName) {
+        newSortState[i].selected = selected;
+        break;
+      }
+    }
+    dispatch({
+      type: sortActions['SORT_UPDATE_SORT'],
+      newSortState: newSortState
+    });
+
+    dispatch(tableActionsGenerators.fetchData())
+  };
 };
 
 export const sortActionsGenerators = {

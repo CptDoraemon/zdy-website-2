@@ -78,11 +78,11 @@ const FiltersGroup = ({
   isPendingApplicable,
   filters,
   disabled,
-  updatePendingFilter,
-  applyFilter,
-  resetFilter,
   dropdown,
   toggleDropdown,
+  updatePendingFilter,
+  applyPendingFilter,
+  resetFilter,
                 }) => {
   const classes = useStyles();
   const canApplyNewFilter = !disabled && isPendingApplicable;
@@ -117,10 +117,8 @@ const FiltersGroup = ({
 
             {/* buttons group */}
             <div className={classes.buttonsGroup}>
-              <Button variant="contained" className={classes.applyButton} disableElevation onClick={applyFilter} disabled={!canApplyNewFilter}>
-                {
-                  isPendingApplicable ? 'Apply new filters' : 'Filters applied'
-                }
+              <Button variant="contained" className={classes.applyButton} disableElevation onClick={applyPendingFilter} disabled={!canApplyNewFilter}>
+                {'Apply new filters'}
               </Button>
               <Button variant="contained" className={classes.resetButton} disableElevation onClick={resetFilter} disabled={disabled}>
                 Reset all filters

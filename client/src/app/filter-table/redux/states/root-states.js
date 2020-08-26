@@ -9,6 +9,4 @@ const filterTableDefaultState = {
   table: cloneDeep(defaultTableState)
 };
 
-console.log(filterTableDefaultState);
-
 export default filterTableDefaultState

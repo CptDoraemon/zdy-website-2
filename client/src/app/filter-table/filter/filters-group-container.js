@@ -1,21 +1,23 @@
 import {connect} from "react-redux";
 import FiltersGroup from "./filters-group";
-import {filterActionsGenerators} from "../redux/actions/filter";
+import {filterActionsGenerators} from "../redux/actions/filter/filter";
 
 function mapDispatchToProps(dispatch) {
   return {
     updatePendingFilter: (title, pending) => dispatch(filterActionsGenerators.updatePendingFilter(title, pending)),
-    toggleDropdown: () => dispatch(filterActionsGenerators.toggleDropdown())
+    toggleDropdown: () => dispatch(filterActionsGenerators.toggleDropdown()),
+    applyPendingFilter: () => dispatch(filterActionsGenerators.applyPendingFilter()),
+    resetFilter: () => dispatch(filterActionsGenerators.resetFilter())
   }
 }
 
 function mapStateToProps(state) {
   return {
-    filters: state.table.filter.filter,
-    isPendingApplicable: state.table.filter.isPendingApplicable,
-    isResettable: state.table.filter.isResettable,
-    disabled: state.table.table.disabled,
-    dropdown: state.table.filter.dropdown
+    filters: state.filter.filter,
+    isPendingApplicable: state.filter.isPendingApplicable,
+    isResettable: state.filter.isResettable,
+    disabled: state.table.disabled,
+    dropdown: state.filter.dropdown
   }
 }
 

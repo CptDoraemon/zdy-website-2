@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from "./redux/configure-store";
+import configureTableStore from "./app/filter-table/redux/configure-store"
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,6 +21,7 @@ import Search from "./pages/search/search";
 import SearchRowDetail from "./pages/search/search-row-detail";
 
 const store = configureStore();
+const tableStore = configureTableStore();
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,7 +46,7 @@ const InnerApp = () => {
         <MainWrapper>
           <Switch>
             <Route path={routerUrls.home} exact render={ () => <Home/> } />
-            <Route path={routerUrls.search} exact render={ () => <Search/> } />
+            <Route path={routerUrls.search} exact render={ () => <Search store={tableStore}/> } />
             <Route path={routerUrls.searchRowDetail.route} exact render={ (props) => <SearchRowDetail id={props.match.params.id} goBack={props.history.goBack}/> } />
           </Switch>
         </MainWrapper>
