@@ -12,8 +12,20 @@ const useStyles = makeStyles(theme => ({
 /**
  * @param {string} label
  * @param {string} helperText
+ * @param {string} value
+ * @param {Function} onChange
+ * @param {string} errorMessage
+ * @param {boolean} error
  */
-const TextInput = ({label, helperText}) => {
+const TextInput = (
+  {
+    label,
+    helperText,
+    value,
+    onChange,
+    errorMessage,
+    error
+  }) => {
   const classes = useStyles();
 
   const ids = useMemo(() => {
@@ -31,7 +43,10 @@ const TextInput = ({label, helperText}) => {
       label={label}
       fullWidth
       variant={'outlined'}
-      helperText={helperText || null}
+      helperText={errorMessage || helperText || ' '}
+      value={value}
+      onChange={onChange}
+      error={error}
     />
   )
 };

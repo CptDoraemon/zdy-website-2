@@ -2,7 +2,6 @@ import React, {useMemo} from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import _uniqueId from 'lodash/uniqueId';
 import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 const useStyles = makeStyles(theme => ({
@@ -11,11 +10,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-/**
- * @param {string} label
- * @param {string} helperText
- */
-const TextInputFile = ({label, helperText}) => {
+const TextInputFile = (
+  {
+    label,
+    helperText,
+    onChange,
+    errorMessage,
+    error
+  }) => {
   const classes = useStyles();
 
   const ids = useMemo(() => {
@@ -39,9 +41,11 @@ const TextInputFile = ({label, helperText}) => {
         <input
           type="file"
           style={{ display: "none" }}
+          onChange={onChange}
+          accept={'.csv,.txt'}
         />
       </Button>
-      <FormHelperText id={ids.helper}>{helperText}</FormHelperText>
+      <FormHelperText id={ids.helper} error={error} variant={'outlined'}>{errorMessage || helperText || ' '}</FormHelperText>
     </>
   )
 };

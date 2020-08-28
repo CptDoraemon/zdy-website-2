@@ -9,11 +9,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-/**
- * @param {string} label
- * @param {string} helperText
- */
-const TextArea = ({label, helperText}) => {
+const TextArea = (
+  {
+    label,
+    helperText,
+    value,
+    onChange,
+    errorMessage,
+    error
+  }) => {
   const classes = useStyles();
 
   const ids = useMemo(() => {
@@ -31,7 +35,10 @@ const TextArea = ({label, helperText}) => {
       label={label}
       fullWidth
       variant={'outlined'}
-      helperText={helperText || null}
+      helperText={errorMessage || helperText || ' '}
+      value={value}
+      onChange={onChange}
+      error={error}
       multiline
       rows={5}
     />
