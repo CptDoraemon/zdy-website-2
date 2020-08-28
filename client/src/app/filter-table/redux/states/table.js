@@ -6,10 +6,10 @@ const defaultTableState = {
   totalPages: 20,
   totalRows: 345,
   dense: false,
-  loading: false,
+  loading: true,
   error: false,
   errorMessage: '',
-  disabled: false
+  disabled: true
 };
 
 export default defaultTableState

@@ -13,6 +13,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePage: (page) => {
       dispatch(tableActionsGenerators.changePage(page))
+    },
+    fetchData: () => {
+      dispatch(tableActionsGenerators.fetchData())
     }
   }
 }

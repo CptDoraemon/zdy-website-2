@@ -165,10 +165,16 @@ const InnerSearchTable = React.forwardRef((
   );
 });
 
-const SearchTable = ({state, title, sortUpdater, toggleDense, changePage}) => {
+const SearchTable = ({state, title, sortUpdater, toggleDense, changePage, fetchData}) => {
   const ref = useRef(null);
   const loading = state.table.loading;
 
+  // fetch data on mounted
+  useEffect(() => {
+    fetchData()
+  }, []);
+
+  // use table height to set loader height
   const [tableHeight, setTableHeight] = useState(400);
   useEffect(() => {
     if (loading) return;

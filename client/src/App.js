@@ -20,6 +20,7 @@ import Home from "./pages/home/home";
 import Search from "./pages/search/search";
 import SearchRowDetail from "./pages/search/search-row-detail";
 import Browse from "./pages/browse/browse";
+import Submission from "./pages/submission/submission";
 
 const store = configureStore();
 const tableStore = configureTableStore();
@@ -50,6 +51,7 @@ const InnerApp = () => {
             <Route path={routerUrls.search} exact render={ () => <Search store={tableStore}/> } />
             <Route path={routerUrls.searchRowDetail.route} exact render={ (props) => <SearchRowDetail id={props.match.params.id} goBack={props.history.goBack}/> } />
             <Route path={routerUrls.browse} exact render={ () => <Browse /> } />
+            <Route path={routerUrls.submission} exact render={ () => <Submission /> } />
           </Switch>
         </MainWrapper>
       </Router>
