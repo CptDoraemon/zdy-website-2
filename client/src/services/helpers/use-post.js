@@ -13,8 +13,18 @@ const usePost = () => {
   const [data, setData] = useState(null);
   const [progress, setProgress] = useState('0');
 
+  const reset = () => {
+    setLoading(false);
+    setError(false);
+    setErrorMessage('');
+    setData(null);
+    setProgress('0')
+  };
+
   const progressHandler = (p) => {
-    setProgress(p.loaded / p.total)
+    const progressNumber0to100 = Math.round(p.loaded / p.total * 100);
+    console.log(`${isNaN(progressNumber0to100) ? '0' : progressNumber0to100}`);
+    setProgress(`${isNaN(progressNumber0to100) ? '0' : progressNumber0to100}`)
   };
   const defaultOptions = {
     method: 'POST',
@@ -40,13 +50,12 @@ const usePost = () => {
       if (loading) return;
 
       // reset states
-      setError(false);
-      setErrorMessage('');
+      reset();
       setLoading(true);
 
       // start fetching
       const res = await axios({url, ...defaultOptions, ...options});
-      const json = await res.json();
+      const json = res.data;
 
       // response received
       setLoading(false);

@@ -8,7 +8,7 @@ const useContributeToDatabase = () => {
     errorMessage,
     data,
     progress,
-    doPost
+    doPost,
   } = usePost();
 
   const submit = (formData) => {
@@ -16,7 +16,6 @@ const useContributeToDatabase = () => {
       data: formData
     };
 
-    console.log(urls.contributeToDatabase);
     doPost(urls.contributeToDatabase, options)
   };
 

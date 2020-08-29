@@ -49,6 +49,9 @@ const useFileInput = () => {
   const handleChange = (e) => {
     resetError();
     const file = e.target.files[0];
+    // when there is a file that was selected earlier, the user clicks select file again, and the file selecting dialog is closed without any file is selected
+    // change event is triggered but with no file in list
+    if (!file) return;
 
     if (file.size > FILE_SIZE_LIMIT) {
       setErrorMessage(`File too large: ${file.name} - ${getFileSizeString(file.size)}`)

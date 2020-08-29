@@ -63,9 +63,8 @@ const useForm = () => {
     file,
     submit,
     loading,
-    error,
     errorMessage,
-    data,
+    successMessage: data,
     progress,
   }
 

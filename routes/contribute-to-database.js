@@ -1,15 +1,27 @@
 const url = require('./urls').contributeToDatabase;
-const multer  = require('multer');
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const parseFormMultipart = require('../middleware/form-mulitpart-parser');
+const errorHandling = require('../utils/error-handling');
+const successTemplate = require('../utils/response-template').success;
 
 const contributionToDatabase = (app) => {
   app.post(
     url,
-    upload.single('file'),
-    (req, res) => {
-      console.log(req.body);
-      console.log(req.file)
+    parseFormMultipart('file'),
+    async (req, res) => {
+      try {
+        const {
+          name,
+          email,
+          note
+        } = req.body;
+        const file = req.file;
+
+        setTimeout(() => {
+          res.json(successTemplate('File received, thank you!'))
+        }, 3000);
+      } catch (e) {
+        errorHandling(e, res)
+      }
   })
 };
 

@@ -13,6 +13,10 @@ const useInput = (callback) => {
   const [errorMessage, setErrorMessage] = useState('');
   const error = errorMessage !== '';
 
+  const reset = () => {
+
+  };
+
   const validateInput = () => {
     const errorMessage = callback(value);
     if (errorMessage.length > 0) {

@@ -4,8 +4,9 @@ import TextInput from "./text-input";
 import TextArea from "./text-area";
 import TextInputFile from "./text-input-file";
 import {Button} from "@material-ui/core";
-import {successButtonStyles} from "../../../styles";
+import {successButtonStyles, warningButtonStyles} from "../../../styles";
 import useForm from "./use-form";
+import FormUploadStatus from "./form-upload-status";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,11 +22,23 @@ const useStyles = makeStyles(theme => ({
   },
   submitButton: {
     ...successButtonStyles(theme).root,
-    margin: theme.spacing(5, 0)
+    margin: theme.spacing(5, 0),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(1, 0),
+      display: 'block'
+    }
   },
+  resetButton: {
+    ...warningButtonStyles(theme).root,
+    margin: theme.spacing(5, 1),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(0, 0, 1, 0),
+      display: 'block'
+    }
+  }
 }));
 
-const Form = () => {
+const Form = ({resetForm}) => {
   const classes = useStyles();
 
   const {
@@ -35,11 +48,12 @@ const Form = () => {
     file,
     submit,
     loading,
-    error,
+    successMessage,
     errorMessage,
-    data,
     progress
   } = useForm();
+
+  const submitted = successMessage !== null;
 
   return (
     <form className={classes.root} onSubmit={submit}>
@@ -82,11 +96,19 @@ const Form = () => {
         />
       </div>
       <div className={classes.itemWrapper}>
-        <Button variant="contained" className={classes.submitButton} disableElevation type={'submit'} disabled={loading}>
+        <Button variant="contained" className={classes.submitButton} disableElevation type={'submit'} disabled={loading || submitted}>
           Submit
         </Button>
+        {
+          submitted &&
+          <Button variant="contained" className={classes.resetButton} disableElevation disabled={loading} onClick={resetForm}>
+            Upload Another
+          </Button>
+        }
       </div>
-      <div>{progress}</div>
+      <div className={classes.itemWrapper}>
+        <FormUploadStatus loading={loading} progress={progress} errorMessage={errorMessage} successMessage={successMessage}/>
+      </div>
     </form>
   )
 };
