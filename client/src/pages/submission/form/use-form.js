@@ -1,5 +1,6 @@
 import useInput from "./use-input";
 import useFileInput from "./use-file-input";
+import {useContributeToDatabase} from "../../../services/use-contribute-to-database";
 
 /**
  * @param {number} min
@@ -19,12 +20,22 @@ const lengthValidator = (min, max) => (value) => {
 const useForm = () => {
   const name = useInput(lengthValidator(0, 100));
   const email = useInput(lengthValidator(0, 100));
-  const note = useInput(lengthValidator(20, 5000));
+  const note = useInput(lengthValidator(0, 5000));
   const file = useFileInput();
+
+  const {
+    loading,
+    error,
+    errorMessage,
+    data,
+    progress,
+    submit: _submit
+  } = useContributeToDatabase();
 
   const submit = (e) => {
     e.preventDefault();
 
+    // return true if validation error exists, otherwise return false
     const validationStatus = [name, email, note, file].reduce((acc, cur) => {
       // reset error
       cur.resetError();
@@ -37,7 +48,12 @@ const useForm = () => {
     if (!validationStatus) return;
 
     // proceed to submit
-    console.log(name.value, email.value)
+    const formData = new FormData();
+    formData.append('name', name.value);
+    formData.append('email', email.value);
+    formData.append('note', note.value);
+    formData.append('file', file.file);
+    _submit(formData);
   };
 
   return {
@@ -45,7 +61,12 @@ const useForm = () => {
     email,
     note,
     file,
-    submit
+    submit,
+    loading,
+    error,
+    errorMessage,
+    data,
+    progress,
   }
 
 };

@@ -33,7 +33,12 @@ const Form = () => {
     email,
     note,
     file,
-    submit
+    submit,
+    loading,
+    error,
+    errorMessage,
+    data,
+    progress
   } = useForm();
 
   return (
@@ -77,10 +82,11 @@ const Form = () => {
         />
       </div>
       <div className={classes.itemWrapper}>
-        <Button variant="contained" className={classes.submitButton} disableElevation type={'submit'} disabled={false}>
+        <Button variant="contained" className={classes.submitButton} disableElevation type={'submit'} disabled={loading}>
           Submit
         </Button>
       </div>
+      <div>{progress}</div>
     </form>
   )
 };
