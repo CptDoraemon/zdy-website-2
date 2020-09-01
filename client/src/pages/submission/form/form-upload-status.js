@@ -24,7 +24,7 @@ const FormUploadStatus = ({loading, progress, errorMessage, successMessage}) => 
   return (
     <div className={classes.root}>
       {
-        loading && progress !== '100' &&
+        loading && progress !== '100' && progress !== '0' &&
         <LinearProgressWithLabel value={progress} />
       }
       {

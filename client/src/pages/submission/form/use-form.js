@@ -17,11 +17,13 @@ const lengthValidator = (min, max) => (value) => {
   return ''
 };
 
+const fileSizeMax = 5 * 1024 * 1024; //5MB
+
 const useForm = () => {
   const name = useInput(lengthValidator(0, 100));
   const email = useInput(lengthValidator(0, 100));
-  const note = useInput(lengthValidator(0, 5000));
-  const file = useFileInput();
+  const note = useInput(lengthValidator(20, 5000));
+  const file = useFileInput(fileSizeMax);
 
   const {
     loading,

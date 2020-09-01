@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const compression = require('compression');
 const cors = require('cors');
 // require routes
 const contributionToDatabase = require('./routes/contribute-to-database');
@@ -9,7 +8,6 @@ const contributionToDatabase = require('./routes/contribute-to-database');
 require('dotenv').config();
 
 // Global Middlewares
-app.use(compression());
 const corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204

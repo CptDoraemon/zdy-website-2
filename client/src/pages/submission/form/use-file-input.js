@@ -3,7 +3,6 @@ import {useState} from "react";
 const KB = 1024;
 const MB = 1024 * 1024;
 const GB = 1024 * 1024 * 1024;
-const FILE_SIZE_LIMIT = 5 * MB;
 const getFileSizeString = (size) => {
   let result = '';
 
@@ -21,6 +20,7 @@ const getFileSizeString = (size) => {
 };
 
 const fileValidator = (file) => {
+  // most validations are checked in onChange handler
   if (!file) {
     return 'File needed'
   }
@@ -28,7 +28,7 @@ const fileValidator = (file) => {
   return ''
 };
 
-const useFileInput = () => {
+const useFileInput = (sizeMax) => {
   const [file, setFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [helperMessage, setHelperMessage] = useState('');
@@ -48,12 +48,13 @@ const useFileInput = () => {
 
   const handleChange = (e) => {
     resetError();
+    setFile(null);
     const file = e.target.files[0];
     // when there is a file that was selected earlier, the user clicks select file again, and the file selecting dialog is closed without any file is selected
     // change event is triggered but with no file in list
     if (!file) return;
 
-    if (file.size > FILE_SIZE_LIMIT) {
+    if (file.size > sizeMax) {
       setErrorMessage(`File too large: ${file.name} - ${getFileSizeString(file.size)}`)
     } else {
       setFile(file);
