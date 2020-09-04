@@ -6,16 +6,27 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-# build client, clean up in /client except /client/build
+# build client
 RUN cd client && npm install && npm run build
-RUN mv ./client/build ./build
-RUN rm -rf ./client
-RUN mkdir client
-RUN mv ./build ./client/build
+# move built client files to /temp/client
+RUN mkdir temp && cd temp && mkdir client
+RUN mv ./client/build/* ./temp/client/
 
-RUN npm install
+# build server
+RUN cd server && npm install && npm run build
+# move built server files to root
+RUN mv ./server/* ./
+
+# remove /client and /server (source files)
+RUN rm -rf ./client
+RUN rm -rf ./server
+
+# move built client files to /client
+RUN mkdir client
+RUN mv ./temp/client/* ./client
+RUN rm -rf ./temp
 
 EXPOSE 5000
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "start:prod" ]
 

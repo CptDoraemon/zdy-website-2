@@ -28,5 +28,7 @@ yarn-error.log*
 **/.idea
 .idea
 **/.DS_Store
+/server/dist
+/server/node_modules
 
 .env
