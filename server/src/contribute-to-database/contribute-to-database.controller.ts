@@ -1,4 +1,4 @@
-import {Body, Controller, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Post, UploadedFile, UseInterceptors, ValidationPipe} from '@nestjs/common';
 import {SuccessResponse} from "../utils/response-template";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {ContributeToDatabaseDto} from "./contribute-to-database.dto";
@@ -8,7 +8,7 @@ export class ContributeToDatabaseController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   postForm(
-    @Body()form: ContributeToDatabaseDto,
+    @Body(new ValidationPipe()) form: ContributeToDatabaseDto,
     @UploadedFile() file
   ): SuccessResponse<string> {
     console.log(file, form);

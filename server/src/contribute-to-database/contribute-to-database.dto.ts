@@ -1,11 +1,12 @@
-import {MinLength} from "class-validator";
+import {MinLength, MaxLength} from "class-validator";
 
 export class ContributeToDatabaseDto {
+  @MaxLength(200)
   name: string;
+
+  @MaxLength(200)
   email: string;
 
-  // @MinLength(20, {
-  //   message: 'Title is too short. Minimal length is $constraint1 characters, but actual is $value',
-  // })
+  @MinLength(20)
   note: string;
 }
