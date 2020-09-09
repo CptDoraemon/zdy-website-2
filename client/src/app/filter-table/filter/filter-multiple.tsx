@@ -6,6 +6,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import filterStyles from "./filter-styles";
 import FilterCommon from "./filter-common";
+import {FilterState} from "../redux/states/filter";
 
 const useStyles = makeStyles(theme => ({
   checkboxLabel: {
@@ -29,34 +30,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-/**
- * @param {{
- *  title: string,
- *  type: string,
- *  original: [],
- *  active: [],
- *  pending: [],
- *  choices: [],
- *  validationMessage: string
- * }} filter
- *  @param {import('./filter').updatePendingFilter} updatePendingFilter
- */
-const FilterMultiple = ({filter, updatePendingFilter}) => {
+interface FilterMultipleProps {
+  filter: FilterState,
+  updatePendingFilter: (filterInternalName: string, choiceInternalName: string) => void
+}
+
+const FilterMultiple: React.FC<FilterMultipleProps> = ({filter, updatePendingFilter}) => {
   const classes = useStyles();
 
-  const changeHandler = (e) => {
-    const name = e.target.name;
-
-    if (e.target.checked) {
-      // check
-      const prevPending = filter.pending.slice();
-      prevPending.push(name);
-      updatePendingFilter(filter.title, prevPending)
-    } else {
-      // uncheck
-      const newPending = filter.pending.filter(existingName => existingName !== name);
-      updatePendingFilter(filter.title, newPending)
-    }
+  const changeHandler = (e: React.ChangeEvent<any>) => {
+    const optionInternalName = e.target.name;
+    updatePendingFilter(filter.internalName, optionInternalName)
+    // if (e.target.checked) {
+    //   // check
+    //   const prevPending = filter.pending.slice();
+    //   prevPending.push(name);
+    //   updatePendingFilter(filter.internalName, name)
+    // } else {
+    //   // uncheck
+    //   const newPending = filter.pending.filter(existingName => existingName !== name);
+    //   updatePendingFilter(filter.internalName, newPending)
+    // }
   };
 
   const isValid = filter.validationMessage === '';
@@ -64,24 +58,24 @@ const FilterMultiple = ({filter, updatePendingFilter}) => {
     // returns an object
     // key is the choice name
     // value is boolean which represent whether is checked or not
-    const obj = {};
-    filter.choices.forEach(key => obj[key] = false);
-    filter.pending.forEach(key => obj[key] = true);
+    const obj: {[key: string]: boolean} = {};
+    filter.choices.forEach(choice => obj[choice.internalName] = false);
+    filter.pending.forEach(choice => obj[choice.internalName] = true);
     return obj
   }, [filter.choices, filter.pending]);
 
   return (
-    <FilterCommon title={filter.title} validationMessage={filter.validationMessage}>
+    <FilterCommon title={filter.displayName} validationMessage={filter.validationMessage}>
       <FormGroup className={classes.formGroup}>
         {
-          filter.choices.map((choiceName, i) => (
+          filter.choices.map((choice, i) => (
             <FormControlLabel
               key={i}
               control={
                 <Checkbox
-                  checked={choicesCheckedStatus[choiceName]}
+                  checked={choicesCheckedStatus[choice.internalName]}
                   onChange={changeHandler}
-                  name={choiceName}
+                  name={choice.internalName}
                   className={classes.checkbox}
                 />
               }
@@ -90,7 +84,8 @@ const FilterMultiple = ({filter, updatePendingFilter}) => {
                   variant={'body2'}
                   component={'span'}
                   className={isValid ? classes.checkboxLabel : `${classes.checkboxLabel} ${classes.error}`}
-                >{choiceName}
+                >
+                  {choice.displayName}
                 </Typography>
               }
             />

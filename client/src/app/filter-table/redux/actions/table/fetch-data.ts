@@ -1,7 +1,10 @@
 import {tableActions} from "./table";
 import urls from "../../../../../services/urls";
 import axios from "axios";
-import {types as filterTypes} from "../../states/filter";
+import {FilterTypes} from "../../states/filter";
+import {TableData} from "../../states/table";
+import {FilterTableDefaultState} from "../../states/root-states";
+import {Dispatch} from "redux";
 
 const startFetchData = () => {
   return {
@@ -9,7 +12,7 @@ const startFetchData = () => {
   }
 };
 
-const fetchDataSucceeded = (tableData, currentPage, totalPages, totalRows) => {
+const fetchDataSucceeded = (tableData: TableData, currentPage: number, totalPages: number, totalRows: number) => {
   return {
     type: tableActions.TABLE_FETCH_DATA_SUCCEEDED,
     tableData,
@@ -19,14 +22,14 @@ const fetchDataSucceeded = (tableData, currentPage, totalPages, totalRows) => {
   }
 };
 
-const fetchDataFailed = (message) => {
+const fetchDataFailed = (message: string) => {
   return {
     type: tableActions.TABLE_FETCH_DATA_FAILED,
     message
   }
 };
 
-const getRequestUrl = (store) => {
+const getRequestUrl = (store: FilterTableDefaultState) => {
   const urlBase = urls.tableData;
 
   const sort = store.sort.map((cur) => {
@@ -40,14 +43,15 @@ const getRequestUrl = (store) => {
     const key = cur.internalName;
     let value;
 
-    if (cur.type === filterTypes.range) {
-      value = `${cur.active[0]},${cur.active[1]}`
-    } else if (cur.type === filterTypes.single) {
-      value = `${cur.active[0]}`
-    } else if (cur.type === filterTypes.multiple) {
-      value = cur.active.length > 1 ?
-        cur.active.join(',') :
-        `${cur.active[0]}`
+    if (cur.type === FilterTypes.range) {
+      value = `${cur.active[0].internalName},${cur.active[1].internalName}`
+    } else if (cur.type === FilterTypes.single) {
+      value = `${cur.active[0].internalName}`
+    } else if (cur.type === FilterTypes.multiple) {
+      const selected = cur.active.map(obj => obj.internalName);
+      value = selected.length > 1 ?
+        selected.join(',') :
+        `${selected[0]}`
     }
 
     return `${key}=${value}`;
@@ -61,7 +65,7 @@ const getRequestUrl = (store) => {
 };
 
 const fetchData = () => {
-  return async (dispatch, getStore) => {
+  return async (dispatch: Dispatch, getStore: () => FilterTableDefaultState) => {
     try {
       dispatch(startFetchData());
 

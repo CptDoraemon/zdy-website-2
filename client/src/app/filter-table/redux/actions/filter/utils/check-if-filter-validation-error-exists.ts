@@ -1,8 +1,6 @@
-/**
- * @param {import('../../../states/filter').FilterState} filterFilterState
- * @return boolean
- */
-const checkIfFilterValidationErrorExists = (filterFilterState) => {
+import {FilterState} from "../../../states/filter";
+
+const checkIfFilterValidationErrorExists = (filterFilterState: FilterState[]) => {
   for (let i=0; i<filterFilterState.length; i++) {
     if (filterFilterState[i].validationMessage !== '') {
       return true

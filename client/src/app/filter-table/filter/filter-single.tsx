@@ -5,6 +5,7 @@ import filterStyles from "./filter-styles";
 import FilterCommon from "./filter-common";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {Choice, FilterState} from "../redux/states/filter";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -22,43 +23,36 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-/**
- * @param {{
- *  title: string,
- *  type: string,
- *  original: [],
- *  active: [],
- *  pending: [],
- *  choices: [],
- *  validationMessage: string
- * }} filter
- * @param {import('./filter').updatePendingFilter} updatePendingFilter
- */
-const FilterSingle = ({filter, updatePendingFilter}) => {
+interface FilterSingleProps {
+  filter: FilterState,
+  updatePendingFilter: (filterInternalName: string, choiceInternalName: string) => void
+}
+
+const FilterSingle: React.FC<FilterSingleProps> = ({filter, updatePendingFilter}) => {
   const classes = useStyles();
 
-  const changeHandler = (e) => {
-    updatePendingFilter(filter.title, [e.target.value])
+  const changeHandler = (e: React.ChangeEvent<any>) => {
+    updatePendingFilter(filter.internalName, e.target.value)
   };
 
   const isValid = filter.validationMessage === '';
-  const selected = filter.pending[0];
+  const selected = filter.pending[0].internalName;
 
 
   return (
-    <FilterCommon title={filter.title} validationMessage={filter.validationMessage}>
+    <FilterCommon title={filter.displayName} validationMessage={filter.validationMessage}>
       <FormControl variant="outlined" className={classes.formControl} error={!isValid}>
         <Select
           value={selected}
           onChange={changeHandler}
-          aria-label={filter.title}
+          aria-label={filter.displayName}
           inputProps={{
             className: classes.selectInput
           }}
         >
           {
             filter.choices.map(choice => (
-              <MenuItem key={choice} value={choice} dense className={classes.menuItem}>{choice}</MenuItem>
+              <MenuItem key={choice.internalName} value={choice.internalName} dense className={classes.menuItem}>{choice.displayName}</MenuItem>
             ))
           }
         </Select>

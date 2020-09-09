@@ -1,4 +1,20 @@
-export const mockSortOptions = [
+interface Option {
+  internalName: string,
+  displayName: string
+}
+
+interface Title {
+  internalName: string,
+  displayName: string
+}
+
+interface OptionObject {
+  items: Option[],
+  title: Title,
+  selected: string
+}
+
+const mockSortOptions: OptionObject[] = [
   {
     items: [
       {internalName: 'id', displayName: 'id'},
@@ -25,6 +41,7 @@ export const mockSortOptions = [
   }
 ];
 
-const defaultSortState = mockSortOptions;
+export type DefaultSortState = OptionObject[];
+const defaultSortState: DefaultSortState = mockSortOptions;
 
-export default defaultSortState
+export default defaultSortState;

@@ -3,6 +3,8 @@ import filterStyles from "./filter-styles";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
 import FilterCommon from "./filter-common";
+import {Choice, FilterState} from "../redux/states/filter";
+import {cloneDeep} from 'lodash';
 
 const useStyles = makeStyles(theme => ({
   textFieldGroup: {
@@ -23,29 +25,22 @@ const useStyles = makeStyles(theme => ({
 const MIN_NAME = 'min';
 const MAX_NAME = 'max';
 
-/**
- * @param {{
- *  title: string,
- *  type: string,
- *  pending: [],
- *  validationMessage: string
- * }} filter
- * @param {import('./filter').updatePendingFilter} updatePendingFilter
- */
-const FilterRange = ({filter, updatePendingFilter}) => {
+interface FilterRangeProps {
+  filter: FilterState,
+  updatePendingFilter: (filterInternalName: string, choiceInternalName: string, additionalKey: string) => void
+}
+
+const FilterRange: React.FC<FilterRangeProps> = ({filter, updatePendingFilter}) => {
   const classes = useStyles();
-  console.log(filter.pending);
 
-  const changeHandler = (e) => {
-    let pending;
-    const newString = e.target.value;
-
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === MIN_NAME) {
-      pending = [newString, filter.pending[1]]
-    } else {
-      pending = [filter.pending[0], newString]
+      // updating min
+      updatePendingFilter(filter.internalName, e.target.value, 'min')
+    } else if (e.target.name === MAX_NAME) {
+      // updating max
+      updatePendingFilter(filter.internalName, e.target.value, 'max')
     }
-    updatePendingFilter(filter.title, pending)
   };
 
   const isValid = filter.validationMessage === '';
@@ -63,10 +58,10 @@ const FilterRange = ({filter, updatePendingFilter}) => {
   };
 
   return (
-    <FilterCommon title={filter.title} validationMessage={filter.validationMessage}>
+    <FilterCommon title={filter.displayName} validationMessage={filter.validationMessage}>
       <div className={classes.textFieldGroup}>
-        <TextField label="Min" name={MIN_NAME} value={filter.pending[0]} {...textFieldProps}/>
-        <TextField label="Max" name={MAX_NAME} value={filter.pending[1]} {...textFieldProps}/>
+        <TextField label="Min" name={MIN_NAME} value={filter.pending[0].internalName} {...textFieldProps}/>
+        <TextField label="Max" name={MAX_NAME} value={filter.pending[1].internalName} {...textFieldProps}/>
       </div>
     </FilterCommon>
   )
