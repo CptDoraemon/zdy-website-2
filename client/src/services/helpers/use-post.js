@@ -59,7 +59,7 @@ const usePost = () => {
       // response received
       setLoading(false);
       if (process.env.REACT_APP_DEBUG === 'true') {
-        console.log(json);
+        console.log(res);
       }
 
       if (json.status === 'ok') {

@@ -8,12 +8,18 @@ export const types = {
 
 /**
  * @typedef {{
+ *   displayName: string,
+ *   internalName: string,
+ * }} Choice
+ */
+/**
+ * @typedef {{
  *   title: string,
  *   type: string,
- *   choices: *[]
- *   original: *[],
- *   active: *[],
- *   pending: *[],
+ *   choices: Choice[]
+ *   original: Choice[],
+ *   active: Choice[],
+ *   pending: Choice[],
  *   validationMessage: string,
  * }} FilterState
  */
@@ -21,8 +27,8 @@ export const types = {
  * @param {string} title
  * @param {string} internalName
  * @param {string} type
- * @param {*[]} choices
- * @param {*[]} original
+ * @param {Choice[]} choices
+ * @param {Choice[]} original
  * @returns {FilterState}
  */
 const getBaseFilterObj = (title, internalName, type, choices, original) => {
@@ -42,21 +48,26 @@ const getBaseFilterObj = (title, internalName, type, choices, original) => {
   }
 };
 
+const getOptionObject = (displayName, internalName) => ({
+  displayName,
+  internalName
+});
+
 const getRangeFilter = (title, internalName, min, max) => {
-  return getBaseFilterObj(title, internalName, types.range, [min, max], [min, max]);
+  return getBaseFilterObj(title, internalName, types.range, [getOptionObject(min), getOptionObject(max)], [getOptionObject(min), getOptionObject(max)]);
 };
 
 /**
- * @param {string[]} choices
- * @param {string[]} original
+ * @param {Choice[]} choices
+ * @param {Choice[]} original
  */
 const getSingleFilter = (title, internalName, choices, original) => {
   return getBaseFilterObj(title, internalName, types.single, choices, original)
 };
 
 /**
- * @param {string[]} choices
- * @param {string[]} original
+ * @param {Choice[]} choices
+ * @param {Choice[]} original
  */
 const getMultipleFilter = (title, internalName, choices, original) => {
   return getBaseFilterObj(title, internalName, types.multiple, choices, original)
@@ -64,10 +75,30 @@ const getMultipleFilter = (title, internalName, choices, original) => {
 
 const mockChoice = new Array(15).fill('1').map((_, i) => `choice${i+1}`);
 const defaultFilters = [
-  getRangeFilter('range filter', 'rangeFilter', 100, 200),
-  getSingleFilter('single filter', 'singleFilter', mockChoice, ['choice1']),
-  getMultipleFilter('multiple filter 1', 'multipleFilter1', mockChoice, ['choice5']),
-  getMultipleFilter('multiple filter 2', 'multipleFilter2', mockChoice, ['choice1', 'choice2'])
+  getRangeFilter('age', 'age', 1, 100),
+  getSingleFilter(
+    'sex',
+    'sex',
+    [
+      getOptionObject('male', '1'),
+      getOptionObject('female', '2'),
+    ],
+    [
+      getOptionObject('male', '1'),
+      getOptionObject('female', '2'),
+    ]),
+  getMultipleFilter(
+    'severity',
+    'severity',
+    [
+      getOptionObject('1', '1'),
+      getOptionObject('2', '2'),
+      getOptionObject('3', '3'),
+    ],
+    [
+      getOptionObject('1', '1'),
+      getOptionObject('3', '3'),
+    ])
 ];
 
 /**
