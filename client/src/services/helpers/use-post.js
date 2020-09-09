@@ -23,7 +23,6 @@ const usePost = () => {
 
   const progressHandler = (p) => {
     const progressNumber0to100 = Math.round(p.loaded / p.total * 100);
-    console.log(`${isNaN(progressNumber0to100) ? '0' : progressNumber0to100}`);
     setProgress(`${isNaN(progressNumber0to100) ? '0' : progressNumber0to100}`)
   };
   const defaultOptions = {

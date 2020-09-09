@@ -4,6 +4,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { ContributeToDatabaseModule } from './contribute-to-database/contribute-to-database.module';
+import { TableDataModule } from './table-data/table-data.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ContributeToDatabaseModule } from './contribute-to-database/contribute-
       exclude: ['/api*'],
     }),
     ContributeToDatabaseModule,
+    TableDataModule,
   ],
   controllers: [AppController],
 })

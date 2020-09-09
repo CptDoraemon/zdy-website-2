@@ -22,7 +22,7 @@ function table(state = filterTableDefaultState.table, actions) {
         {
           loading: true,
           error: false,
-          errorMessage: '',
+          errorMessage: actions.message,
           disabled: true
         }
       );
@@ -31,6 +31,10 @@ function table(state = filterTableDefaultState.table, actions) {
         {},
         state,
         {
+          data: actions.tableData,
+          currentPage: actions.currentPage,
+          totalPages: actions.totalPages,
+          totalRows: actions.totalRows,
           loading: false,
           disabled: false
         }

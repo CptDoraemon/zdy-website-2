@@ -1,5 +1,6 @@
 const urls = {
-  contributeToDatabase: '/api/contribute-to-database'
+  contributeToDatabase: '/api/contribute-to-database',
+  tableData: '/api/table-data'
 };
 
 if (process.env.REACT_APP_DEBUG === 'true') {

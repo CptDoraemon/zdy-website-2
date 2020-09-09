@@ -19,18 +19,20 @@ export const types = {
  */
 /**
  * @param {string} title
+ * @param {string} internalName
  * @param {string} type
  * @param {*[]} choices
  * @param {*[]} original
  * @returns {FilterState}
  */
-const getBaseFilterObj = (title, type, choices, original) => {
+const getBaseFilterObj = (title, internalName, type, choices, original) => {
   const copy = (value) => {
     return Array.isArray(value) ? value : value.slice()
   };
 
   return {
     title,
+    internalName,
     type,
     choices: copy(choices),
     original: copy(original),
@@ -40,32 +42,32 @@ const getBaseFilterObj = (title, type, choices, original) => {
   }
 };
 
-const getRangeFilter = (title, min, max) => {
-  return getBaseFilterObj(title, types.range, [min, max], [min, max]);
+const getRangeFilter = (title, internalName, min, max) => {
+  return getBaseFilterObj(title, internalName, types.range, [min, max], [min, max]);
 };
 
 /**
  * @param {string[]} choices
  * @param {string[]} original
  */
-const getSingleFilter = (title, choices, original) => {
-  return getBaseFilterObj(title, types.single, choices, original)
+const getSingleFilter = (title, internalName, choices, original) => {
+  return getBaseFilterObj(title, internalName, types.single, choices, original)
 };
 
 /**
  * @param {string[]} choices
  * @param {string[]} original
  */
-const getMultipleFilter = (title, choices, original) => {
-  return getBaseFilterObj(title, types.multiple, choices, original)
+const getMultipleFilter = (title, internalName, choices, original) => {
+  return getBaseFilterObj(title, internalName, types.multiple, choices, original)
 };
 
 const mockChoice = new Array(15).fill('1').map((_, i) => `choice${i+1}`);
 const defaultFilters = [
-  getRangeFilter('range filter', 100, 200),
-  getSingleFilter('single filter', mockChoice, ['choice1']),
-  getMultipleFilter('multiple filter 1', mockChoice, ['choice5']),
-  getMultipleFilter('multiple filter 2', mockChoice, ['choice1', 'choice2'])
+  getRangeFilter('range filter', 'rangeFilter', 100, 200),
+  getSingleFilter('single filter', 'singleFilter', mockChoice, ['choice1']),
+  getMultipleFilter('multiple filter 1', 'multipleFilter1', mockChoice, ['choice5']),
+  getMultipleFilter('multiple filter 2', 'multipleFilter2', mockChoice, ['choice1', 'choice2'])
 ];
 
 /**

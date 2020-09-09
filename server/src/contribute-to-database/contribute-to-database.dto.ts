@@ -9,7 +9,7 @@ export class ContributeToDatabaseDto {
   @MaxLength(200)
   email: string;
 
-  // @MinLength(20)
-  // @MaxLength(2000)
+  @MinLength(20)
+  @MaxLength(2000)
   note: string;
 }
