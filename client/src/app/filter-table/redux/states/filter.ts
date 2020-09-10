@@ -61,7 +61,7 @@ const getMultipleFilter = (displayName: string, internalName: string, choices: C
 // const mockChoice = new Array(15).fill('1').map((_, i) => `choice${i+1}`);
 const defaultFilters: FilterState[] = [
   getRangeFilter('age', 'age', '1', '100'),
-  getSingleFilter(
+  getMultipleFilter(
     'sex',
     'sex',
     [
@@ -82,8 +82,22 @@ const defaultFilters: FilterState[] = [
     ],
     [
       getOptionObject('1', '1'),
+      getOptionObject('2', '2'),
       getOptionObject('3', '3'),
-    ])
+    ]),
+  getSingleFilter(
+    'demo only',
+    'demoOnly',
+    [
+      getOptionObject('option1', 'option1'),
+      getOptionObject('option2', 'option2'),
+      getOptionObject('option3', 'option3'),
+      getOptionObject('option4', 'option4'),
+    ],
+    [
+      getOptionObject('option1', 'option1'),
+    ]
+  )
 ];
 
 export interface DefaultFilterState {

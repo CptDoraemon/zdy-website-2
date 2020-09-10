@@ -19,17 +19,12 @@ const mockSortOptions: OptionObject[] = [
     items: [
       {internalName: 'id', displayName: 'id'},
       {internalName: 'age', displayName: 'age'},
+      {internalName: 'sex', displayName: 'sex'},
+      {internalName: 'severity', displayName: 'severity'},
+      {internalName: 'death', displayName: 'death'},
     ],
     title: {internalName: 'sortBy', displayName: 'sort by'},
     selected: 'id'
-  },
-  {
-    items: [
-      {internalName: '10', displayName: '10'},
-      {internalName: '20', displayName: '20'},
-    ],
-    title: {internalName: 'rowPerPage', displayName: 'row per page'},
-    selected: '10'
   },
   {
     items: [
@@ -38,7 +33,16 @@ const mockSortOptions: OptionObject[] = [
     ],
     title: {internalName: 'sortOrder', displayName: 'sort order'},
     selected: 'asc'
-  }
+  },
+  {
+    items: [
+      {internalName: '20', displayName: '20'},
+      {internalName: '50', displayName: '50'},
+      {internalName: '100', displayName: '100'},
+    ],
+    title: {internalName: 'rowPerPage', displayName: 'row per page'},
+    selected: '20'
+  },
 ];
 
 export type DefaultSortState = OptionObject[];

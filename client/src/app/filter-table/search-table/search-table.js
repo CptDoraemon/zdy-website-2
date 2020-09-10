@@ -14,7 +14,7 @@ import SearchTableControls from "./search-table-controls";
 import SearchTableHead from "./search-table-head";
 import SearchTableToolbar from "./search-table-toolbar";
 import routerUrls from "../../../router-urls";
-import {Error, Loading} from "./util-pages";
+import {Error, Loading, NoResultFound} from "./util-pages";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -187,6 +187,8 @@ const SearchTable = ({state, title, sortUpdater, toggleDense, changePage, fetchD
     return <Error/>
   } else if (state.table.loading) {
     return <Loading height={tableHeight}/>
+  } else if (!state.table.data || !state.table.data.length) {
+    return <NoResultFound/>
   } else {
     const props = {
       table: state.table,

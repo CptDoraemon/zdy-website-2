@@ -28,6 +28,14 @@ const Error = () => {
   )
 };
 
+const NoResultFound = () => {
+  return (
+    <Wrapper>
+      No result found with the applied filters
+    </Wrapper>
+  )
+};
+
 const Wrapper = ({children, height}) => {
   const classes = useStyles();
 
@@ -38,5 +46,5 @@ const Wrapper = ({children, height}) => {
   )
 };
 
-export {Loading, Error}
+export {Loading, Error, NoResultFound}
 
