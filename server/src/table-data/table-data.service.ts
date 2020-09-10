@@ -20,7 +20,7 @@ export class TableDataService {
         age: Between(age[0], age[1])
       },
       order: {
-        [sortBy]: sortOrder.toUpperCase()
+        [sortBy]: sortOrder
       },
       skip,
       take: rowPerPage

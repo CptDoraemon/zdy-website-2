@@ -20,8 +20,6 @@ export class TableDataController {
   ): Promise<SuccessResponse<TableDataDto>> {
 
     const {sortBy, sortOrder, rowPerPage, age, sex, severity, page} = query;
-    console.log(sortBy, sortOrder, rowPerPage, age, sex, severity, page);
-
     const {result, totalRows} = await this.tableDataService.getTableData(sortBy, sortOrder, rowPerPage, age, sex, severity, page);
 
     return {
