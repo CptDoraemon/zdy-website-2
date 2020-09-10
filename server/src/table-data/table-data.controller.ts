@@ -29,7 +29,7 @@ export class TableDataController {
       data: {
         tableData: result,
         currentPage: page,
-        totalPages: Math.floor(totalRows / rowPerPage),
+        totalPages: Math.ceil(totalRows / rowPerPage),
         totalRows: totalRows,
       },
     };
