@@ -76,10 +76,12 @@ const updateRangeFilter = (filterState: FilterState, choiceInternalName: string,
   const min = additionalKey === 'min' ? parseFloat(choiceInternalName) : parseFloat(filterState.pending[minIndex].internalName);
   const max = additionalKey === 'max' ? parseFloat(choiceInternalName) : parseFloat(filterState.pending[maxIndex].internalName);
 
-  const isValid = min >= allowedMin && max <= allowedMax && min <= max;
-  if (!isValid) {
+  if (min < allowedMin || max > allowedMax) {
     filterState.validationMessage = `The number should between ${allowedMin} and ${allowedMax}`;
+  } else if (min > max) {
+    filterState.validationMessage = `maximum value should be larger than minimum value`;
   }
+
   filterState.pending = [
     {
       internalName: min.toString(),

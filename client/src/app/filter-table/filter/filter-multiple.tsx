@@ -13,17 +13,11 @@ const useStyles = makeStyles(theme => ({
     ...filterStyles(theme).text,
   },
   error: {
-    color: theme.palette.error.main,
-    fontWeight: 700,
-    '&$:focus': {
-      color: theme.palette.error.main,
-    }
-  },
-  checkbox: {
-    padding: '2px 9px',
+    ...filterStyles(theme).error,
   },
   formGroup: {
-    position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
     [theme.breakpoints.down('sm')]: {
       maxHeight: 'none',
     }
@@ -41,16 +35,6 @@ const FilterMultiple: React.FC<FilterMultipleProps> = ({filter, updatePendingFil
   const changeHandler = (e: React.ChangeEvent<any>) => {
     const optionInternalName = e.target.name;
     updatePendingFilter(filter.internalName, optionInternalName)
-    // if (e.target.checked) {
-    //   // check
-    //   const prevPending = filter.pending.slice();
-    //   prevPending.push(name);
-    //   updatePendingFilter(filter.internalName, name)
-    // } else {
-    //   // uncheck
-    //   const newPending = filter.pending.filter(existingName => existingName !== name);
-    //   updatePendingFilter(filter.internalName, newPending)
-    // }
   };
 
   const isValid = filter.validationMessage === '';
@@ -76,7 +60,6 @@ const FilterMultiple: React.FC<FilterMultipleProps> = ({filter, updatePendingFil
                   checked={choicesCheckedStatus[choice.internalName]}
                   onChange={changeHandler}
                   name={choice.internalName}
-                  className={classes.checkbox}
                 />
               }
               label={

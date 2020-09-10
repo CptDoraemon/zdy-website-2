@@ -2,32 +2,30 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {FormControl} from "@material-ui/core";
 import FormLabel from "@material-ui/core/FormLabel";
-import FormGroup from "@material-ui/core/FormGroup";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import filterStyles from "./filter-styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1, 0),
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   },
   legend: {
     ...filterStyles(theme).text,
-    marginBottom: '4px',
-    fontWeight: 700
+    fontWeight: 700,
+    minWidth: 130
   },
   checkboxLabel: {
     ...filterStyles(theme).text,
   },
-  error: {
-    color: theme.palette.error.main,
+  helperTextError: {
     fontWeight: 700,
-    '&$:focus': {
-      color: theme.palette.error.main,
-    }
+    ...filterStyles(theme).error,
   },
-  checkbox: {
-    padding: '2px 9px'
-  }
 }));
 
 /**
@@ -41,7 +39,7 @@ const FilterCommon = ({validationMessage, title, children}) => {
   const isValid = validationMessage === '';
 
   return (
-    <FormControl component="fieldset" className={classes.root}>
+    <FormControl component="div" className={classes.root}>
       <FormLabel
         error={!isValid}
         component="legend"
@@ -55,7 +53,7 @@ const FilterCommon = ({validationMessage, title, children}) => {
 
       {
         !isValid &&
-        <FormHelperText className={classes.error}>{validationMessage}</FormHelperText>
+        <FormHelperText className={classes.helperTextError}>{validationMessage}</FormHelperText>
       }
     </FormControl>
   )

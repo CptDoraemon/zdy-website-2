@@ -29,16 +29,19 @@ const useStyles = makeStyles(theme => ({
   filtersGroup: {
     marginLeft: theme.spacing(2),
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  buttonsGroup: {
+    margin: theme.spacing(2, 0, 0, 2),
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flexWrap: 'wrap',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     }
-  },
-  buttonsGroup: {
-    marginLeft: theme.spacing(2)
   },
   applyButton: {
     ...successButtonStyles(theme).root,
@@ -46,7 +49,10 @@ const useStyles = makeStyles(theme => ({
   },
   resetButton: {
     ...warningButtonStyles(theme).root,
-    margin: theme.spacing(1),
+    margin: theme.spacing(0, 1),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(1, 0),
+    }
   }
 }));
 
