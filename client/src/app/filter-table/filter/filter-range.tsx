@@ -13,8 +13,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-start',
   },
   textField: {
-    width: 60,
-    margin: theme.spacing(1, 1, 1, 0)
+    width: 80,
+    margin: theme.spacing(0, 1, 0, 0)
   },
   textFieldInput: {
     ...filterStyles(theme).text,

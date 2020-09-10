@@ -10,7 +10,6 @@ import {Choice, FilterState} from "../redux/states/filter";
 const useStyles = makeStyles(theme => ({
   formControl: {
     minWidth: 150,
-    margin: theme.spacing(1, 0),
     textTransform: 'capitalize'
   },
   selectInput: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   menuItem: {
     textTransform: 'capitalize'
-  }
+  },
 }));
 
 interface FilterSingleProps {

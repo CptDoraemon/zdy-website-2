@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
   legend: {
     ...filterStyles(theme).text,
     fontWeight: 700,
-    minWidth: 130
+    minWidth: 120,
+    margin: theme.spacing(0, 1, 0, 0)
   },
   checkboxLabel: {
     ...filterStyles(theme).text,

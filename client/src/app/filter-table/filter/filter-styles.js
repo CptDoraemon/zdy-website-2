@@ -10,7 +10,7 @@ const filterStyles = (theme) => createStyles({
     '&$:focus': {
       color: theme.palette.error.main,
     }
-  },
+  }
 });
 
 export default filterStyles

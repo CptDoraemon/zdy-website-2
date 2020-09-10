@@ -9,19 +9,26 @@ import FilterCommon from "./filter-common";
 import {FilterState} from "../redux/states/filter";
 
 const useStyles = makeStyles(theme => ({
-  checkboxLabel: {
-    ...filterStyles(theme).text,
-  },
-  error: {
-    ...filterStyles(theme).error,
-  },
   formGroup: {
     display: 'flex',
     flexDirection: 'row',
     [theme.breakpoints.down('sm')]: {
       maxHeight: 'none',
     }
-  }
+  },
+  formControlLabel: {
+    marginLeft: -6
+  },
+  checkbox: {
+    padding: 4
+  },
+  checkboxLabel: {
+    ...filterStyles(theme).text,
+    padding: '0px 4px',
+  },
+  error: {
+    ...filterStyles(theme).error,
+  },
 }));
 
 interface FilterMultipleProps {
@@ -55,11 +62,13 @@ const FilterMultiple: React.FC<FilterMultipleProps> = ({filter, updatePendingFil
           filter.choices.map((choice, i) => (
             <FormControlLabel
               key={i}
+              className={classes.formControlLabel}
               control={
                 <Checkbox
                   checked={choicesCheckedStatus[choice.internalName]}
                   onChange={changeHandler}
                   name={choice.internalName}
+                  className={classes.checkbox}
                 />
               }
               label={
