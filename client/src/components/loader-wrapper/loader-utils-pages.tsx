@@ -12,7 +12,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Loading = ({height}) => {
+const Loading: React.FC<{
+  height?: number
+}> = ({height}) => {
   return (
     <Wrapper height={height}>
       <CircularProgress disableShrink />
@@ -20,7 +22,9 @@ const Loading = ({height}) => {
   )
 };
 
-const Error = ({message}) => {
+const Error: React.FC<{
+  message?: string
+}> = ({message}) => {
   return (
     <Wrapper>
       {message || 'Failed to load table data'}
@@ -36,11 +40,13 @@ const NoResultFound = () => {
   )
 };
 
-const Wrapper = ({children, height}) => {
+const Wrapper: React.FC<{
+  height?: number
+}> = ({children, height}) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={height !== undefined ? {height} : null}>
+    <div className={classes.root} style={{height}}>
       {children}
     </div>
   )

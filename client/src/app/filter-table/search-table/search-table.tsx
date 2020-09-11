@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -14,9 +14,9 @@ import SearchTableControls from "./search-table-controls";
 import SearchTableHead from "./search-table-head";
 import SearchTableToolbar from "./search-table-toolbar";
 import routerUrls from "../../../router-urls";
-import {Error, Loading, NoResultFound} from "./util-pages";
 import {DefaultTableState} from "../redux/states/table";
 import {DefaultSortState} from "../redux/states/sort";
+import LoaderWrapper from "../../../components/loader-wrapper/loader-wrapper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -198,39 +198,29 @@ const SearchTable: React.FC<SearchTableProps> = (
     changePage,
     fetchData
   }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
   // fetch data on mounted
   useEffect(() => {
     fetchData()
   }, []);
 
-  // use table height to set loader height
-  const [tableHeight, setTableHeight] = useState(400);
-  useEffect(() => {
-    if (tableState.loading) return;
-    if (ref.current) {
-      setTableHeight(ref.current.scrollHeight);
-    }
-  }, [tableState.loading]);
+  const props = {
+    tableState,
+    sortState,
+    title,
+    sortUpdater,
+    toggleDense,
+    changePage,
+  };
 
-  if (tableState.error) {
-    return <Error message={tableState.errorMessage}/>
-  } else if (tableState.loading) {
-    return <Loading height={tableHeight}/>
-  } else if (!tableState.data || !tableState.data.length) {
-    return <NoResultFound/>
-  } else {
-    const props = {
-      tableState,
-      sortState,
-      title,
-      sortUpdater,
-      toggleDense,
-      changePage,
-    };
-    return <InnerSearchTable {...props} ref={ref}/>
-  }
+  return (
+    <LoaderWrapper
+      loading={tableState.loading}
+      error={tableState.error}
+      errorMessage={tableState.errorMessage}
+      noResultFound={!tableState.data || !tableState.data.length}
+      dataLoadedComponent={(ref) => <InnerSearchTable {...props} ref={ref} />}
+    />
+  )
 };
 
 export default SearchTable

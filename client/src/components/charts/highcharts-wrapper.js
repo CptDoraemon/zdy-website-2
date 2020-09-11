@@ -9,7 +9,10 @@ const HighchartsWrapper = ({children}) => {
     import('highcharts/es-modules/masters/highcharts.src')
       .then(module => {
           const promiseArray = [
-            import('highcharts/es-modules/masters/highcharts-more.src')
+            import('highcharts/es-modules/masters/highcharts-more.src'),
+            import('highcharts/es-modules/masters/modules/heatmap.src'),
+            import('highcharts/es-modules/masters/modules/annotations.src'),
+            import('highcharts/es-modules/masters/modules/exporting.src'),
           ];
           Promise.all(promiseArray)
             .then(() => setHighchartsModule(module.default))
@@ -25,7 +28,7 @@ const HighchartsWrapper = ({children}) => {
   }, []);
 
   if (error) {
-    return 'Failed to load chart'
+    return <>'Failed to load chart'</>
   } else if (highchartsModule === null) {
     return <CircularProgress disableShrink />
   } else {
