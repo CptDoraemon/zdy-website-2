@@ -60,7 +60,6 @@ const handleUpdatePendingFilter = (prevState: FilterState[], filterInternalName:
 };
 
 const updateRangeFilter = (filterState: FilterState, choiceInternalName: string, additionalKey: string) => {
-  console.log(choiceInternalName, additionalKey);
   // require additionalKey
   const possibleAdditionalKey = ['max', 'min'];
   if (possibleAdditionalKey.indexOf(additionalKey) === -1) return filterState;
@@ -76,10 +75,14 @@ const updateRangeFilter = (filterState: FilterState, choiceInternalName: string,
   const min = additionalKey === 'min' ? parseFloat(choiceInternalName) : parseFloat(filterState.pending[minIndex].internalName);
   const max = additionalKey === 'max' ? parseFloat(choiceInternalName) : parseFloat(filterState.pending[maxIndex].internalName);
 
+  console.log(min, max);
+
   if (min < allowedMin || max > allowedMax) {
     filterState.validationMessage = `The number should between ${allowedMin} and ${allowedMax}`;
   } else if (min > max) {
     filterState.validationMessage = `maximum value should be larger than minimum value`;
+  } else if (isNaN(min) || isNaN(max)) {
+    filterState.validationMessage = `a number is required`;
   }
 
   filterState.pending = [

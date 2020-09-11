@@ -20,10 +20,10 @@ const Loading = ({height}) => {
   )
 };
 
-const Error = () => {
+const Error = ({message}) => {
   return (
     <Wrapper>
-      Failed to load table data
+      {message || 'Failed to load table data'}
     </Wrapper>
   )
 };

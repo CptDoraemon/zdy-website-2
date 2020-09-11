@@ -113,23 +113,25 @@ const FiltersGroup = ({
         <Fade in timeout={500}>
           <Paper className={classes.dropdown} elevation={0}>
             {/* filters group */}
-            <div className={classes.filtersGroup}>
-              {
-                filters.map((obj, i) => (
-                  <Filter filter={obj} key={i} updatePendingFilter={updatePendingFilter}/>
-                  ))
-              }
-            </div>
+            <form>
+              <div className={classes.filtersGroup}>
+                {
+                  filters.map((obj, i) => (
+                    <Filter filter={obj} key={i} updatePendingFilter={updatePendingFilter}/>
+                    ))
+                }
+              </div>
 
-            {/* buttons group */}
-            <div className={classes.buttonsGroup}>
-              <Button variant="contained" className={classes.applyButton} disableElevation onClick={applyPendingFilter} disabled={!canApplyNewFilter}>
-                {'Apply new filters'}
-              </Button>
-              <Button variant="contained" className={classes.resetButton} disableElevation onClick={resetFilter} disabled={disabled}>
-                Reset all filters
-              </Button>
-            </div>
+              {/* buttons group */}
+              <div className={classes.buttonsGroup}>
+                <Button variant="contained" type={'submit'} className={classes.applyButton} disableElevation onClick={applyPendingFilter} disabled={!canApplyNewFilter}>
+                  {'Apply new filters'}
+                </Button>
+                <Button variant="contained" className={classes.resetButton} disableElevation onClick={resetFilter} disabled={disabled}>
+                  Reset all filters
+                </Button>
+              </div>
+            </form>
 
           </Paper>
         </Fade>

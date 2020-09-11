@@ -184,7 +184,7 @@ const SearchTable = ({state, title, sortUpdater, toggleDense, changePage, fetchD
   }, [loading]);
 
   if (state.table.error) {
-    return <Error/>
+    return <Error message={state.table.errorMessage}/>
   } else if (state.table.loading) {
     return <Loading height={tableHeight}/>
   } else if (!state.table.data || !state.table.data.length) {

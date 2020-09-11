@@ -22,7 +22,7 @@ function table(state = filterTableDefaultState.table, actions) {
         {
           loading: true,
           error: false,
-          errorMessage: actions.message,
+          errorMessage: '',
           disabled: true
         }
       );
@@ -37,6 +37,17 @@ function table(state = filterTableDefaultState.table, actions) {
           totalRows: actions.totalRows,
           loading: false,
           disabled: false
+        }
+      );
+    case tableActions.TABLE_FETCH_DATA_FAILED:
+      return Object.assign(
+        {},
+        state,
+        {
+          loading: false,
+          disabled: false,
+          error: true,
+          errorMessage: actions.message,
         }
       );
     default:
