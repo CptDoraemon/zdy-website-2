@@ -21,6 +21,7 @@ import Search from "./pages/search/search";
 import SearchRowDetail from "./pages/search/search-row-detail";
 import Browse from "./pages/browse/browse";
 import Submission from "./pages/submission/submission";
+import Footer from "./components/footer/footer";
 
 const store = configureStore();
 const tableStore = configureTableStore();
@@ -29,6 +30,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100vw',
     maxWidth: '100%',
+    minHeight: '100vh',
     overflowX: 'hidden',
     display: 'flex',
     flexDirection: 'column',
@@ -54,6 +56,7 @@ const InnerApp = () => {
             <Route path={routerUrls.submission} exact render={ () => <Submission /> } />
           </Switch>
         </MainWrapper>
+        <Footer/>
       </Router>
     </div>
   );

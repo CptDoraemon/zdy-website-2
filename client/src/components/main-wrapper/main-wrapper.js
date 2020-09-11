@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 const useStyles = makeStyles(theme => ({
   root: {
     width: theme.breakpoints.values['lg'] - 2 * theme.spacing(2),
-    margin: theme.spacing(2),
+    margin: theme.spacing(5, 2),
     padding: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
       width: `calc(100% - ${2 * theme.spacing(1)}px)`,

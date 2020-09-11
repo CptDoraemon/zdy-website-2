@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 2, 0, 0),
     flexGrow: 1,
     fontWeight: 700,
-    fontSize: '1.5rem'
+    fontSize: '1.25rem'
   },
   activeTab: {
     '&:visited': {
@@ -60,7 +60,7 @@ const Header = ({data, homeLink}) => {
       <Toolbar variant={'dense'}>
         <Typography component={'h1'} className={classes.title} >
           <Link to={homeLink} className={classes.homeLink}>
-            Database
+            DATABASE
           </Link>
         </Typography>
         <Tabs
