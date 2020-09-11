@@ -2,16 +2,17 @@ import {sortActionsGenerators} from "../redux/actions/sort";
 import {tableActionsGenerators} from "../redux/actions/table/table";
 import {connect} from "react-redux";
 import SearchTable from "./search-table";
+import {FilterTableDefaultState} from "../redux/states/root-states";
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
-    sortUpdater: (internalName, selected) => {
+    sortUpdater: (internalName: string, selected: string) => {
       dispatch(sortActionsGenerators.updateSort(internalName, selected))
     },
     toggleDense: () => {
       dispatch(tableActionsGenerators.toggleDense())
     },
-    changePage: (page) => {
+    changePage: (page: string) => {
       dispatch(tableActionsGenerators.changePage(page))
     },
     fetchData: () => {
@@ -20,9 +21,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: FilterTableDefaultState) {
   return {
-    state: state,
+    tableState: state.table,
+    sortState: state.sort
   }
 }
 

@@ -7,25 +7,23 @@ export type TableData = TableRow[]
 export interface DefaultTableState {
   data: null | TableData,
   currentPage: number,
-  totalPages: null | number,
-  totalRows: null | number,
+  totalPages: number,
+  totalRows: number,
   dense: boolean,
   loading: boolean,
   error: boolean,
-  errorMessage: string,
-  disabled: boolean
+  errorMessage: string
 }
 
 const defaultTableState: DefaultTableState = {
   data: null,
   currentPage: 1,
-  totalPages: null,
-  totalRows: null,
+  totalPages: 0,
+  totalRows: 0,
   dense: false,
   loading: true,
   error: false,
-  errorMessage: '',
-  disabled: true
+  errorMessage: ''
 };
 
 export default defaultTableState

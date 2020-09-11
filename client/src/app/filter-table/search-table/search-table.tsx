@@ -15,6 +15,8 @@ import SearchTableHead from "./search-table-head";
 import SearchTableToolbar from "./search-table-toolbar";
 import routerUrls from "../../../router-urls";
 import {Error, Loading, NoResultFound} from "./util-pages";
+import {DefaultTableState} from "../redux/states/table";
+import {DefaultSortState} from "../redux/states/sort";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,31 +46,42 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const InnerSearchTable = React.forwardRef((
+interface InnerSearchTableProps {
+  tableState: DefaultTableState,
+  sortState: DefaultSortState,
+  title: string,
+  sortUpdater: (internalName: string, selected: string) => void,
+  toggleDense: () => void,
+  changePage: (page: string) => void,
+}
+
+type Selecteds = {[key: string]: boolean}
+
+const InnerSearchTable = React.forwardRef<HTMLDivElement, InnerSearchTableProps>((
   {
-    table,
-    sort,
+    tableState,
+    sortState,
     title,
     sortUpdater,
     toggleDense,
     changePage,
   }, ref) => {
   const classes = useStyles();
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState<Selecteds>({});
 
-  const data = table.data;
-  const dense = table.dense;
-  const totalPages = table.totalPages;
-  const currentPage = table.currentPage;
-  const totalRows = table.totalRows;
+  const data = tableState.data || [];
+  const dense = tableState.dense;
+  const totalPages = tableState.totalPages;
+  const currentPage = tableState.currentPage;
+  const totalRows = tableState.totalRows;
 
   const header = useMemo(() => {
-    return Object.keys(data[0]);
+    return Object.keys(data ? data[0] : {});
   }, [data]);
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = {};
+      const newSelecteds: Selecteds = {};
       data.forEach(row => {
         const key = `${row.id}`;
         newSelecteds[key] = true
@@ -79,18 +92,18 @@ const InnerSearchTable = React.forwardRef((
     }
   };
 
-  const handleClick = (id) => {
+  const handleClick = (id: string) => {
     const newSelecteds = cloneDeep(selected);
     const key = id.toString();
     newSelecteds[key] = !newSelecteds[key];
     setSelected(newSelecteds);
   };
 
-  const handleChangePage = (e, value) => {
-    changePage(value);
+  const handleChangePage = (e: any, value: number) => {
+    changePage(value.toString());
   };
 
-  const isSelected = (id) => !(selected[id] === undefined || selected[id] === false);
+  const isSelected = (id: string) => !(selected[id] === undefined || selected[id] === false);
   const selectedIDs = [];
   for (let key in selected) {
     if (selected.hasOwnProperty(key) && selected[key] !== undefined && selected[key] !== false) {
@@ -102,7 +115,7 @@ const InnerSearchTable = React.forwardRef((
     <div className={classes.root} ref={ref}>
       <Paper className={classes.paper} elevation={0}>
         <SearchTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows}/>
-        <SearchTableControls sort={sort} sortUpdater={sortUpdater} dense={dense} toggleDense={toggleDense}/>
+        <SearchTableControls sort={sortState} sortUpdater={sortUpdater} dense={dense} toggleDense={toggleDense}/>
         <TableContainer className={classes.table}>
           <Table
             stickyHeader
@@ -118,7 +131,7 @@ const InnerSearchTable = React.forwardRef((
             <TableBody>
               {
                 data.map((row, i) => {
-                  const id = parseInt(row.id);
+                  const id = row.id;
                   const isItemSelected = isSelected(id);
 
                   return (
@@ -165,9 +178,27 @@ const InnerSearchTable = React.forwardRef((
   );
 });
 
-const SearchTable = ({state, title, sortUpdater, toggleDense, changePage, fetchData}) => {
-  const ref = useRef(null);
-  const loading = state.table.loading;
+interface SearchTableProps {
+  tableState: DefaultTableState,
+  sortState: DefaultSortState,
+  title: string,
+  sortUpdater: (internalName: string, selected: string) => void,
+  toggleDense: () => void,
+  changePage: (page: string) => void,
+  fetchData: () => void
+}
+
+const SearchTable: React.FC<SearchTableProps> = (
+  {
+    tableState,
+    sortState,
+    title,
+    sortUpdater,
+    toggleDense,
+    changePage,
+    fetchData
+  }) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   // fetch data on mounted
   useEffect(() => {
@@ -177,22 +208,22 @@ const SearchTable = ({state, title, sortUpdater, toggleDense, changePage, fetchD
   // use table height to set loader height
   const [tableHeight, setTableHeight] = useState(400);
   useEffect(() => {
-    if (loading) return;
+    if (tableState.loading) return;
     if (ref.current) {
       setTableHeight(ref.current.scrollHeight);
     }
-  }, [loading]);
+  }, [tableState.loading]);
 
-  if (state.table.error) {
-    return <Error message={state.table.errorMessage}/>
-  } else if (state.table.loading) {
+  if (tableState.error) {
+    return <Error message={tableState.errorMessage}/>
+  } else if (tableState.loading) {
     return <Loading height={tableHeight}/>
-  } else if (!state.table.data || !state.table.data.length) {
+  } else if (!tableState.data || !tableState.data.length) {
     return <NoResultFound/>
   } else {
     const props = {
-      table: state.table,
-      sort: state.sort,
+      tableState,
+      sortState,
       title,
       sortUpdater,
       toggleDense,

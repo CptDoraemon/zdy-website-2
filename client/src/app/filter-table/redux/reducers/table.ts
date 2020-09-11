@@ -1,7 +1,8 @@
 import filterTableDefaultState from "../states/root-states";
 import {tableActions} from "../actions/table/table";
+import {DefaultTableState} from "../states/table";
 
-function table(state = filterTableDefaultState.table, actions) {
+function table(state = filterTableDefaultState.table, actions: any): DefaultTableState {
   switch (actions.type) {
     case tableActions.TABLE_TOGGLE_DENSE:
       return Object.assign(
@@ -22,8 +23,7 @@ function table(state = filterTableDefaultState.table, actions) {
         {
           loading: true,
           error: false,
-          errorMessage: '',
-          disabled: true
+          errorMessage: ''
         }
       );
     case tableActions.TABLE_FETCH_DATA_SUCCEEDED:
@@ -35,8 +35,7 @@ function table(state = filterTableDefaultState.table, actions) {
           currentPage: actions.currentPage,
           totalPages: actions.totalPages,
           totalRows: actions.totalRows,
-          loading: false,
-          disabled: false
+          loading: false
         }
       );
     case tableActions.TABLE_FETCH_DATA_FAILED:
@@ -45,7 +44,6 @@ function table(state = filterTableDefaultState.table, actions) {
         state,
         {
           loading: false,
-          disabled: false,
           error: true,
           errorMessage: actions.message,
         }
