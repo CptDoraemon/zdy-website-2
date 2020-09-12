@@ -26,6 +26,7 @@ const resetFilter = () => {
         {
           filter: updatedFilterArray,
           isPendingApplicable: false,
+          isResettable: false
         }
       )
     });

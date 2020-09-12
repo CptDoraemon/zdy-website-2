@@ -110,7 +110,7 @@ export interface DefaultFilterState {
 const defaultFilterState: DefaultFilterState = {
   filter: cloneDeep<FilterState[]>(defaultFilters),
   isPendingApplicable: false,
-  isResettable: false,
+  isResettable: false, // when the active state is different than the original state, the filters are resettable
   dropdown: false
 };
 

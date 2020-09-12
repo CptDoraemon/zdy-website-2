@@ -5,22 +5,13 @@ import Paper from "@material-ui/core/Paper";
 import Fade from "@material-ui/core/Fade";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import {primaryButtonStyles, successButtonStyles, warningButtonStyles} from "../../../styles";
+import {successButtonStyles, warningButtonStyles} from "../../../styles";
 import Filter from "./filter";
+import FilterToggleButton from "./filter-toggle-button";
 
 const useStyles = makeStyles(theme => ({
   root: {
 
-  },
-  filterButton: {
-    margin: theme.spacing(1, 0),
-    textTransform: 'capitalize'
-  },
-  filterButtonActive: {
-    ...successButtonStyles(theme).root
-  },
-  filterButtonInactive : {
-    ...primaryButtonStyles(theme).root
   },
   dropdown: {
     padding: theme.spacing(1, 0),
@@ -95,19 +86,7 @@ const FiltersGroup = ({
 
   return (
     <div className={classes.root}>
-      <Button
-        variant="contained"
-        color='primary'
-        disableElevation
-        className={`${classes.filterButton} ${isResettable ? classes.filterButtonActive : classes.filterButtonInactive}`}
-        endIcon={dropdown ? <KeyboardArrowDownIcon/> : <ChevronRightIcon/>}
-        aria-expanded={dropdown}
-        onClick={toggleDropdown}
-      >
-        {
-          isResettable ? 'Filters Applied' : 'Filters'
-        }
-      </Button>
+      <FilterToggleButton dropdown={dropdown} toggleDropdown={toggleDropdown} isActiveFilterDifferentThanDefault={isResettable}/>
       {
         dropdown &&
         <Fade in timeout={500}>
@@ -124,10 +103,10 @@ const FiltersGroup = ({
 
               {/* buttons group */}
               <div className={classes.buttonsGroup}>
-                <Button variant="contained" type={'submit'} className={classes.applyButton} disableElevation onClick={applyPendingFilter} disabled={!canApplyNewFilter}>
+                <Button size={'small'} variant="contained" type={'submit'} className={classes.applyButton} disableElevation onClick={applyPendingFilter} disabled={!canApplyNewFilter}>
                   {'Apply new filters'}
                 </Button>
-                <Button variant="contained" className={classes.resetButton} disableElevation onClick={resetFilter} disabled={disabled}>
+                <Button size={'small'} variant="contained" className={classes.resetButton} disableElevation onClick={resetFilter} disabled={disabled}>
                   Reset all filters
                 </Button>
               </div>
