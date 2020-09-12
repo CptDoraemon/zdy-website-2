@@ -1,5 +1,5 @@
 import {filterActions} from "./filter";
-import {cloneDeep, isEqual} from 'lodash'
+import {cloneDeep} from 'lodash'
 import checkIfFilterValidationErrorExists from "./utils/check-if-filter-validation-error-exists";
 import {tableActionsGenerators} from "../table/table";
 import {FilterTableDefaultState} from "../../states/root-states";
@@ -24,12 +24,19 @@ const applyPendingFilter = () => {
     });
 
     // check if the new active filters is the same as the original filters
+    // bad design
     let isResettable = false;
     for (let i=0; i<updatedFilterArray.length; i++) {
-      if (!isEqual(updatedFilterArray[i].active, updatedFilterArray[i].original)) {
-        isResettable = true;
-        break;
-      }
+      const currentFilter = updatedFilterArray[i];
+      const original = currentFilter.original;
+      const active = currentFilter.active;
+      const hash: {[key: string]: boolean} = {};
+
+      original.forEach(obj => hash[obj.internalName] = false);
+      active.forEach(obj => hash[obj.internalName] = true);
+      isResettable = Object.values(hash).filter(value => !value).length !== 0;
+
+      if (isResettable) break;
     }
 
     dispatch({
