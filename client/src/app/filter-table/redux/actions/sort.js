@@ -23,6 +23,8 @@ const updateSort = (internalName, selected) => {
       newSortState: newSortState
     });
 
+    // need reset page when new sort is applied
+    dispatch(tableActionsGenerators.changePage(1));
     dispatch(tableActionsGenerators.fetchData())
   };
 };
