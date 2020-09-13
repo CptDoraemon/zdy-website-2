@@ -32,7 +32,7 @@ const resetFilter = () => {
     });
 
     // need reset page when new filter is applied
-    dispatch(tableActionsGenerators.changePage(1));
+    dispatch(tableActionsGenerators.changePageAndRefreshData(1));
   }
 };
 
