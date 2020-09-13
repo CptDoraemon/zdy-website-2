@@ -1,5 +1,5 @@
 import filterTableDefaultState from "../states/root-states";
-import {sortActions} from "../actions/sort";
+import {sortActions} from "../actions/sort/sort";
 
 function sort(state = filterTableDefaultState.sort, actions) {
   switch (actions.type) {

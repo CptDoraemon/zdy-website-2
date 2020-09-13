@@ -1,8 +1,9 @@
 import {cloneDeep} from "lodash";
-import {tableActionsGenerators} from "./table/table";
+import {tableActionsGenerators} from "../table/table";
+import initSort from "./init-sort";
 
 export const sortActions = {
-  'SORT_UPDATE_SORT': 'SORT_UPDATE_SORT'
+  'SORT_UPDATE_SORT': 'SORT_UPDATE_SORT',
 };
 
 /**
@@ -30,5 +31,6 @@ const updateSort = (internalName, selected) => {
 };
 
 export const sortActionsGenerators = {
-  updateSort
+  updateSort,
+  initSort
 };

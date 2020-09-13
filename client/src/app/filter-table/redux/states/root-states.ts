@@ -6,13 +6,15 @@ import defaultTableState, {DefaultTableState} from "./table";
 export interface FilterTableDefaultState {
   filter: DefaultFilterState,
   sort: DefaultSortState,
-  table: DefaultTableState
+  table: DefaultTableState,
+  isStateInitialized: boolean
 }
 
 const filterTableDefaultState: FilterTableDefaultState = {
   filter: cloneDeep(defaultFilterState),
   sort: cloneDeep(defaultSortState),
-  table: cloneDeep(defaultTableState)
+  table: cloneDeep(defaultTableState),
+  isStateInitialized: false
 };
 
 export default filterTableDefaultState

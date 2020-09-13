@@ -1,4 +1,4 @@
-import {sortActionsGenerators} from "../redux/actions/sort";
+import {sortActionsGenerators} from "../redux/actions/sort/sort";
 import {tableActionsGenerators} from "../redux/actions/table/table";
 import {connect} from "react-redux";
 import SearchTable from "./search-table";

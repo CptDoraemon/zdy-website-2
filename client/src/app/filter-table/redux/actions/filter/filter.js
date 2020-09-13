@@ -1,10 +1,12 @@
 import updatePendingFilter from "./update-pending-filter";
 import applyPendingFilter from "./apply-pending-filter";
 import resetFilter from "./reset-filter";
+import initFilter from "./init-filter";
 
 export const filterActions = {
   'FILTER_SET_FILTER_STATE': 'FILTER_SET_FILTER_STATE',
-  'FILTER_TOGGLE_DROPDOWN': 'FILTER_TOGGLE_DROPDOWN'
+  'FILTER_TOGGLE_DROPDOWN': 'FILTER_TOGGLE_DROPDOWN',
+  'FILTER_INIT_FILTER': 'FILTER_INIT_FILTER',
 };
 
 const toggleDropdown = () => {
@@ -13,17 +15,10 @@ const toggleDropdown = () => {
   }
 };
 
-//
-// const applyPendingFilterAndRefreshData = () => {
-//   return (dispatch) => {
-//     dispatch(applyPendingFilter());
-//     dispatch(tableActionsGenerators.fetchData());
-//   }
-// };
-
 export const filterActionsGenerators = {
   updatePendingFilter,
   toggleDropdown,
   applyPendingFilter,
-  resetFilter
+  resetFilter,
+  initFilter
 };

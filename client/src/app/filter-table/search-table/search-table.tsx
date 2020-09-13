@@ -16,7 +16,7 @@ import SearchTableToolbar from "./search-table-toolbar";
 import routerUrls from "../../../router-urls";
 import {DefaultTableState} from "../redux/states/table";
 import {DefaultSortState} from "../redux/states/sort";
-import LoaderWrapper from "../../../components/loader-wrapper/loader-wrapper";
+import LoaderWrapper from "../loader-wrapper/loader-wrapper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -200,7 +200,9 @@ const SearchTable: React.FC<SearchTableProps> = (
   }) => {
   // fetch data on mounted
   useEffect(() => {
-    fetchData()
+    if (!tableState.data) {
+      fetchData()
+    }
   }, []);
 
   const props = {

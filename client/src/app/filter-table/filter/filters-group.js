@@ -3,8 +3,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Button} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Fade from "@material-ui/core/Fade";
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import {successButtonStyles, warningButtonStyles} from "../../../styles";
 import Filter from "./filter";
 import FilterToggleButton from "./filter-toggle-button";
