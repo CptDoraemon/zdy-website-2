@@ -21,7 +21,7 @@ const defaultTableState: DefaultTableState = {
   totalPages: 0,
   totalRows: 0,
   dense: false,
-  loading: true,
+  loading: false,
   error: false,
   errorMessage: ''
 };

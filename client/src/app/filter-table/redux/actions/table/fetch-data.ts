@@ -75,7 +75,7 @@ const fetchData = () => {
       const url = getRequestUrl(store);
       const res = await axios.get(url);
 
-      if (res.status >= 200 && res.status < 300) {
+      if (res.status === 200) {
         const json = res.data.data;
         dispatch(fetchDataSucceeded(json.tableData, json.currentPage, json.totalPages, json.totalRows));
       } else {
