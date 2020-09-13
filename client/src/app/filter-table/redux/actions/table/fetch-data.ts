@@ -67,13 +67,15 @@ const getRequestUrl = (store: FilterTableDefaultState) => {
 const fetchData = () => {
   return async (dispatch: Dispatch, getStore: () => FilterTableDefaultState) => {
     try {
+      const store = getStore();
+      if (store.table.loading) return;
+
       dispatch(startFetchData());
 
-      const store = getStore();
       const url = getRequestUrl(store);
       const res = await axios.get(url);
 
-      if (res.status === 200) {
+      if (res.status >= 200 && res.status < 300) {
         const json = res.data.data;
         dispatch(fetchDataSucceeded(json.tableData, json.currentPage, json.totalPages, json.totalRows));
       } else {
