@@ -114,7 +114,7 @@ const InnerSearchTable = React.forwardRef<HTMLDivElement, InnerSearchTableProps>
   return (
     <div className={classes.root} ref={ref}>
       <Paper className={classes.paper} elevation={0}>
-        <SearchTableToolbar selected={selectedIDs.slice()} title={title} totalRows={totalRows}/>
+        <SearchTableToolbar selected={selectedIDs} title={title} totalRows={totalRows}/>
         <SearchTableControls sort={sortState} sortUpdater={sortUpdater} dense={dense} toggleDense={toggleDense}/>
         <TableContainer className={classes.table}>
           <Table

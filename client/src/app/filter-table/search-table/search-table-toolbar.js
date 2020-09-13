@@ -40,7 +40,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 const SearchTableToolbar = ({selected, title, totalRows}) => {
   const classes = useToolbarStyles();
 
-  const numSelected = useMemo(() => selected.length, [selected]);
+  const numSelected = selected.length;
 
   return (
     <Toolbar
