@@ -10,7 +10,7 @@ function table(state = filterTableDefaultState.table, actions: any): DefaultTabl
         state,
         {dense: actions.dense}
       );
-    case tableActions.TABLE_CHANGE_PAGE:
+    case tableActions.TABLE_CHANGE_PAGE_AND_REFRESH_DATA:
       return Object.assign(
         {},
         state,

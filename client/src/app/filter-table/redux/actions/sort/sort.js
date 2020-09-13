@@ -25,8 +25,7 @@ const updateSort = (internalName, selected) => {
     });
 
     // need reset page when new sort is applied
-    dispatch(tableActionsGenerators.changePage(1));
-    dispatch(tableActionsGenerators.fetchData())
+    dispatch(tableActionsGenerators.changePageAndRefreshData(1));
   };
 };
 

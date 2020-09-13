@@ -13,7 +13,7 @@ function mapDispatchToProps(dispatch: any) {
       dispatch(tableActionsGenerators.toggleDense())
     },
     changePage: (page: string) => {
-      dispatch(tableActionsGenerators.changePage(page))
+      dispatch(tableActionsGenerators.changePageAndRefreshData(page))
     },
     fetchData: () => {
       dispatch(tableActionsGenerators.fetchData())
